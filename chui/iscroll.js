@@ -55,7 +55,7 @@ var m = Math,
 			doc = document,
 			i;
 
-		that.wrapper = typeof el == 'object' ? el : doc.querySelector(el).parentNode;
+		that.wrapper = typeof el == 'object' ? el.parentNode : doc.querySelector(el).parentNode;
 		that.wrapper.style.overflow = 'hidden';
 		that.scroller = that.wrapper.children[0];
 
@@ -174,6 +174,9 @@ iScroll.prototype = {
 		switch(e.type) {
 			case START_EV:
 				if (!hasTouch && e.button !== 0) return;
+				if (!hasTouch && e.target.tagName === "INPUT") return;
+				if (!hasTouch && e.target.tagName === "SELECT") return;
+				if (!hasTouch && e.target.tagName === "TEXTAREA") return;
 				if (!hasTouch && !that.options.mouseGestures) return;
 				that._start(e);
 				break;

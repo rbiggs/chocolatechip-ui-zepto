@@ -17,7 +17,7 @@ WAML makes coding a Web app logical and straightforward, the way it was meant to
 
 Copyright 2011 Robert Biggs: www.chocolatechip-ui.com
 License: BSD
-Version: 0.9 beta
+Version: 1.0
 
 */
 html, body {
@@ -26,7 +26,7 @@ html, body {
 	min-height: 100%;
 	font: normal 14px/18px Helvetica, Sans-serif;
 }
-app, view, subview, section, navbar, toolbar, tabbar, tableview, tablecell, celltitle, cellsubtitle, celldetail, tableheader, tablefooter, popover, popup, picker, screencover, stack, panel, scrollpanel, shim {
+app, view, subview, section, navbar, toolbar, tabbar, tableview, tablecell, celltitle, cellsubtitle, celldetail, tableheader, tablefooter, popover, popup, picker, mask, stack, panel, scrollpanel, shim {
 	display: block;
 	padding: 0;
 	margin: 0;
@@ -38,7 +38,7 @@ app, view, subview, section, navbar, toolbar, tabbar, tableview, tablecell, cell
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 navbar, toolbar, tabbar {
-    z-index: 100000;
+    z-index: 1000;
 }
 app {
 	overflow-y: auto;
@@ -282,6 +282,78 @@ subview[ui-associations="withToolBar withTabBar"] {
 	-webkit-background-size: 20px 20px;
 	background-size: 10px 10px;
 }
+*[ui-background-style=argyle] {
+	background-image: 
+		-webkit-gradient(linear, right top, left bottom, 
+			from(rgba(0,0,0,0.1)), 
+			color-stop(0.5, rgba(0,0,0,0.1)), 
+			color-stop(0.5, transparent), 
+			to(transparent)),
+		-webkit-gradient(linear, left top, right bottom, 
+			from(rgba(0,0,0,0.1)), 
+			color-stop(0.5, rgba(0,0,0,0.1)), 
+			color-stop(0.5, transparent), 
+			to(transparent));
+	-webkit-background-size: 15px 15px;
+	background-size: 12px 12px;
+}
+*[ui-background-style=intersect] {
+	background-image: 
+		-webkit-gradient(linear, left top, right bottom, 
+			color-stop(0.23, rgba(0, 0, 0, 0.1)), 
+			color-stop(0.25, transparent),
+			color-stop(0.5, transparent), 
+			color-stop(0.5, rgba(0, 0, 0, 0.1)),
+			color-stop(0.73, rgba(0, 0, 0, 0.1)), 
+			color-stop(0.75, transparent),
+			to(transparent)),
+		-webkit-gradient(linear, right top, left bottom,
+			color-stop(0.23, rgba(0, 0, 0, 0.1)), 
+			color-stop(0.25, transparent),
+			color-stop(0.5, transparent), 
+			color-stop(0.5, rgba(0, 0, 0, 0.1)),
+			color-stop(0.73, rgba(0, 0, 0, 0.1)), 
+			color-stop(0.75, transparent),
+			to(transparent));
+	-webkit-background-size: 20px 20px;
+	background-size: 12px 12px;
+}
+*[ui-background-style=linen] {
+	background-image: 
+		-webkit-gradient(linear, left top, right top, 
+			from(rgba(0,0,0,0.1)), 
+			color-stop(0.25, rgba(0,0,0,0.1)), 
+			color-stop(0.25, transparent), 
+			to(transparent)),
+		-webkit-gradient(linear, left top, right top, 
+			from(rgba(0,0,0,0.1)), 
+			color-stop(0.15, rgba(0,0,0,0.1)), 
+			color-stop(0.15, transparent), 
+			to(transparent)),
+		-webkit-gradient(linear, left top, right top, 
+			from(rgba(0,0,0,0.1)), 
+			color-stop(0.15, rgba(0,0,0,0.1)), 
+			color-stop(0.15, transparent), 
+			to(transparent)),
+		-webkit-gradient(linear, left top, left bottom, 
+			from(rgba(0,0,0,0.1)), 
+			color-stop(0.17, rgba(0,0,0,0.1)), 
+			color-stop(0.17, transparent), 
+			to(transparent)),
+		-webkit-gradient(linear, left top, left bottom, 
+			from(rgba(0,0,0,0.1)), 
+			color-stop(0.15, rgba(0,0,0,0.1)), 
+			color-stop(0.15, transparent), 
+			to(transparent)),
+		-webkit-gradient(linear, left top, left bottom, 
+			from(rgba(0,0,0,0.1)), 
+			color-stop(0.13, rgba(0,0,0,0.1)), 
+			color-stop(0.13, transparent), 
+			to(transparent)); 
+	-webkit-background-size: 10px 100%,  17px 100%, 21px 100%, 100% 10px, 100% 17px, 100% 21px;
+	background-size: 10px 100%, 17px 100%, 21px 100%, 100% 10px, 100% 17px, 100% 21px;
+	backgroud-position: 0 0, 6px 0, 14px 0, 0 0, 0 6px, 0 16px;
+}
 /*  Layout Flexible Box Styles */
 *[ui-box=horizontal] {
 	display: -webkit-box;
@@ -380,9 +452,16 @@ stack {
 stack > panel, 
 stack > segmentedcontrol {
 	-webkit-box-flex: 1;
-	display: -webkit-box !important;
+	display: -webkit-box;
 }
-
+stack[ui-implements=segmented-toggle-stack] {
+	margin: 0 10px;
+}
+stack[ui-implements=segmented-toggle-stack] > panel {display: none;
+	-webkit-box-align: center;
+	-webkit-box-pack: center; 
+}
+stack[ui-implements=segmented-toggle-stack] > panel:first-of-type {display: -webkit-blox;}
 stack[ui-kind=horizontal] {
 	display: -webkit-box;
 	-webkit-box-orient: horizontal;
@@ -1521,7 +1600,7 @@ tableview > tablecell {
     background-color: #fff;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
-    cursor: pointer;
+    cursor: auto;
     padding: 8px;
     border-left:  1px solid #d9d9d9;
     border-right: 1px solid #d9d9d9;
@@ -1533,14 +1612,20 @@ tableview > tablecell {
     -webkit-box-sizing: border-box;
     min-height: 44px;
 }
-tableview > tablecell:hover, tableview > tablecell.touched {
+tableview > tablecell[href]:hover, 
+tableview > tablecell[href].touched,
+tableview[ui-implements="detail-menu"] > tablecell:hover,
+tableview[ui-implements="detail-menu"] > tablecell.touched,
+tableview[ui-implements="selection-list"] > tablecell:hover,
+tableview[ui-implements="selection-list"] > tablecell.touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
             from(#4286f5), 
             to(#194fdb));
     color: #fff;
+	cursor: pointer;
 }
-tableview.ui-no-hover > tablecell:hover,
+/*tableview.ui-no-hover > tablecell:hover,
 tableview > tablecell.ui-no-hover:hover,
 tableview > tablecell.ui-no-hover.touched,
 tableview.ui-no-hover > tablecell.touched,
@@ -1554,21 +1639,15 @@ tableview[ui-tablecell-order=stacked] > tablecell.ui-no-hover.touched >cellsubti
 	background-image: none !important;
 	color: #000 !important;
 	cursor: auto;
-}
-tableview > tablecell:hover > * {
+} */
+tableview > tablecell[href]:hover > *,
+tableview[ui-implements="detail-menu"] > tablecell:hover > * {
 	color: #fff !important;
 }
-tableview > tablecell.ui-no-hover > *, tableview.ui-no-hover > tablecell > * {
-    color: #000 !important
-}
-view tableview > tablecell.ui-no-hover:hover > cellsubtitle,
-view tableview.ui-no-hover > tablecell:hover > cellsubtitle {
-	color: #586B96 !important;
-}
-view tableview[ui-tablecell-order="stacked"] > tablecell.ui-no-hover:hover > cellsubtitle {
-	color: #666 !important;
-}
-tableview > tablecell:hover > span, tableview > tablecell.touched > span {
+tableview > tablecell[href]:hover > span, 
+tableview > tablecell[href].touched > span,
+tableview[ui-implements="detail-menu"] > tablecell:hover > span,
+tableview[ui-implements="detail-menu"] > tablecell.touched > span {
     color: #fff;
 }
 tablecell[ui-implements=action] > celltitle:after {
@@ -1585,7 +1664,7 @@ tablecell[ui-implements=disclosure]:after {
     margin-bottom: -20px;
     margin-left: -10px;
 }
-tablecell[ui-implements=disclosure]:hover:after {
+tablecell[ui-implements=disclosure][href]:hover:after {
     color: #fff;
 }
 tablecell[ui-usage=icon][ui-implements=disclosure]:after, tablecell[ui-implements=disclosure][ui-usage=icon]:after {
@@ -2190,6 +2269,59 @@ tablefooter {
 	text-align: center;
 	text-shadow: 0px 1px 1px #fff;
 }
+/* Styles for Titled Tableview Lists */
+tableview[ui-kind^=titled-list] tableheader {
+	-webkit-box-sizing: border-box;
+	height: 24px;
+	background-image:
+		-webkit-gradient(linear, left top, left bottom,
+			from(#92a1ac),
+			to(#b7bfc6));
+	border-top: solid 1px #717d85;
+	border-bottom: solid 1px #989ea4;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 12px;
+	color: #fff;
+	text-shadow: 0 1px 1px #666;
+	text-align: left;
+	display: -webkit-box;
+	-webkit-box-align: center;
+}
+/* Styles for Alphabetical Titled Tableview Lists */
+stack[ui-kind=alphabetical-list] {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	bottom: 0;
+	width: 30px;
+	padding: 8px 0;
+	-webkit-border-radius: 10px;
+	display: -webkit-box;
+	-webkit-box-align: center;
+	-webkit-box-orient: vertical;
+	-webkit-box-pack: justify;
+	background-color: rgba(0,0,0,0.0);
+}
+stack[ui-kind=alphabetical-list] span {
+	text-align: center !important;
+	display: block;
+	-webkit-box-flex:1;
+	width: 30px;
+	height: 12px;
+	font-size: 10px;
+	font-weight: bold;
+	color: #000;
+}
+stack[ui-kind=alphabetical-list] span:hover {
+	cursor: pointer;
+}
+stack[ui-kind=alphabetical-list]:hover {
+	background-color: rgba(0,0,0,0.25);
+}
+stack[ui-kind=alphabetical-list]:hover span {
+	color: #fff;
+}
 /* End Tableview Styles */
  
 
@@ -2207,7 +2339,7 @@ popup {
 	-webkit-transform: scale(1);
 	-webkit-transition: all 0.25s  ease-in-out;
 	position: absolute;
-	z-index: 1001;
+	z-index: 10000;
 	margin-left: auto;
 	margin-right: auto;
 	background-image: 
@@ -2333,19 +2465,6 @@ popup toolbar[ui-placement=bottom] > uibutton[ui-kind=action]:hover, popup toolb
 			to(#222839));
 			text-shadow: black 0px 1px 0px;
 }
-screencover {
-	width: 100%;
-	height: 100%;
-	display: block;
-	background-color: rgba(0,0,0,0.5);
-	position: absolute;
-	z-index: 1000;
-	top: 0px;
-	left: 0px;
-}
-screencover[ui-visible-state=hidden] {
-	display: none;
-}
 /* End Modal Popups */
 
 /* Styles for Selection Lists. */
@@ -2363,6 +2482,9 @@ tableview[ui-implements=selection-list] tablecell.selected > checkmark {
 }
 tableview[ui-implements=selection-list] tablecell > checkmark, tableview[ui-implements=selection-list] tablecell.selected:hover > checkmark {
 	color: #fff;
+}
+tableview[ui-implements=selection-list] > tablecell input[type=radio] {
+	display: none;
 }
 
 /* switchcontrol Styles */
@@ -2384,7 +2506,7 @@ switchcontrol {
     line-height: 28px;
     cursor: pointer;
     -webkit-user-select: none;
-	-webkit-box-shadow: inset 0 1px 3px #bababa, inset 0 5px 15px #d4d4d4;
+	-webkit-box-shadow: inset 0 1px 3px #bababa, inset 0 12px 3px 2px rgba(232,232,232,0.5);
 }
 switchcontrol[ui-kind=traditional] {
     width: 94px;
@@ -2401,6 +2523,7 @@ switchcontrol > thumb {
 	width:  26px;
 	height:  26px;
 	-webkit-box-shadow: inset 0 2px 1px #fff, inset 0 -2px 1px #fff;
+	background-color: #cecece;
 	background-image: 
 		-webkit-gradient(linear, left top, left bottom, 
 			from(#cecece), 
@@ -2408,6 +2531,16 @@ switchcontrol > thumb {
     -webkit-transition: all 0.125s  ease-in-out;
     -webkit-transform: translateX(0px);
     -webkit-transform: translate3d(0,0,0);
+}
+switchcontrol:hover > thumb {
+	background-image: none;
+}
+switchcontrol[ui-kind=generic]:hover > thumb {
+	-webkit-box-shadow: inset 0 2px 1px #fff, inset 0 -2px 1px #fff;
+	background-image: none;
+}
+switchcontrol > input {
+	display: none;
 }
 switchcontrol[ui-kind=traditional] > thumb {
     -webkit-border-radius: 7px;
@@ -2419,7 +2552,7 @@ switchcontrol:before {
 	display:  block;
 	height: 26px;
 	-webkit-border-radius: 20px;
-	-webkit-box-shadow: inset 0 1px 3px #0063b7, inset 0 7px 15px #0071d1;
+	-webkit-box-shadow: inset 0 1px 2px #0063b7, inset 0 12px 3px 2px rgba(0,127,234,0.5);
 	background-color: #64b1f2;
 	position:  absolute;
 	width:  75px;
@@ -2487,7 +2620,7 @@ switchcontrol[ui-kind=traditional] > thumb:after {
 	display: none;
 }
 switchcontrol[ui-implements=attention]:before {
-	-webkit-box-shadow: inset 0 3px 10px #ea6502, inset 0 7px 15px #ea6502;
+	-webkit-box-shadow: inset 0 3px 10px #ea6502, inset 0 12px 3px 2px rgba(234,101,2,0.4);
 	background-color: #ff9c12;
 }
 switchcontrol > label[ui-implements=on] {
@@ -2530,8 +2663,8 @@ switchcontrol > label[ui-implements=off] {
 }
 
 switchcontrol[ui-kind=generic] {
-	-webkit-box-shadow: inset 0 3px 10px #b7b7b7, inset 0 7px 15px #f4f4f4;
-	background-color: #eaeaea;
+	-webkit-box-shadow: inset 0 0px 3px #b7b7b7, inset 0 12px 3px 2px #eaeaea;
+	background-color: #f6f6f6;
 }
 switchcontrol[ui-kind=generic] > thumb {
 	-webkit-box-shadow: none;
@@ -2541,7 +2674,7 @@ switchcontrol[ui-kind=generic] > thumb {
 			to(#e3e3e3));
 }
 switchcontrol[ui-kind=generic]:before {
-	-webkit-box-shadow: inset 0 3px 10px #8e8e8e, inset 0 7px 15px #bfbfbf;
+	-webkit-box-shadow: inset 0 3px 10px #8e8e8e, inset 0 12px 3px 2px #bfbfbf;
 	background-color: #c4c4c4;
 }
 switchcontrol[ui-kind=generic] > thumb:before {
@@ -2599,7 +2732,7 @@ actionsheet, actionsheet[ui-action-sheet-color=blue] {
 	-webkit-user-select: none;
 	width: 100%;
 	-webkit-box-sizing: border-box;
-	padding: 30px 0 0px 0;
+	padding: 30px 0 0 0;
 	background-image:
 		-webkit-gradient(linear, left top, left bottom,
 			from(#000),
@@ -2618,7 +2751,7 @@ actionsheet, actionsheet[ui-action-sheet-color=blue] {
 	background-position: top left, top left, top left;
 	position: absolute;
 	bottom: 0px;
-	z-index: 1000;
+	z-index: 10000;
 	-webkit-transition: all 0.5s  ease-in-out;
 	-webkit-transform: translate3d(0,0,0);
 	opacity: 1;
@@ -2643,29 +2776,14 @@ actionsheet.hidden {
 	opacity: 0;
 }
 actionsheet > scrollpanel {
-	padding: 0 0 20px 0;
+	padding: 0 0 0 0;
 }
 actionsheet p {
 	font-size: 12px;
 	color: #fff;
 	text-shadow: 0 -1px 1px #000;
 	text-align: center;
-	margin-bottom: 12px;
-}
-screencover {
-	width: 100%;
-	height: 100%;
-	display: block;
-	background-color: rgba(0,0,0,0.5);
-	position: absolute;
-	z-index: 1000;
-	top: 0;
-	right: 0;
-	bottom:0;
-	left: 0;
-}
-screencover.hidden {
-	display: none;
+	margin: 0;
 }
 /* End Action Sheet Styles */
 
@@ -2940,7 +3058,6 @@ expander > panel {
 	opacity: 1;
 	-webkit-transform-origin-y: 0px;
 	overflow: hidden;
-	padding-bottom: 10px;
 } 
 expander.ui-status-expanded > header {
 	background-image: 
@@ -3782,7 +3899,7 @@ popover actionsheet {
     -webkit-border-radius: 5px;
     box-shadow: 0 0 2px  rgba(65,72,92,1);
 }
-overlay {
+mask {
 	display: block;
 	background-color: #000;
 	position: absolute;
@@ -3793,4 +3910,5 @@ overlay {
 	height: 100%;
 	width: 100%;
 	z-index: 9999;
+	cursor: pointer;
 }

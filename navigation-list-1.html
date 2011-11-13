@@ -14,12 +14,17 @@
 			beep : function(msg) {
 				return console.log(msg);
 			}
-		});
+		}); 
         $(function() {
-        	/*$('uibutton[ui-implements="bozo"]').bind("click", function() {
-        		//$(this).UIToggleButtonLabel("Bozo","Clown");
-        	});*/
+        	$("#Peeps").css("height", $("#Peeps").css("height"));
+        	$('uibutton[ui-implements="bozo"]').bind("click", function() {
+        		$(this).UIToggleButtonLabel("Bozo","Clown");
+        		$("#Peeps").anim({height: "100px", "font-size": "40px", "background-color": "green"}, 5, "ease-in-out");
+        	});
         	$.beep("hi from me.");
+        	$("tableview").each(function(idx, item) {
+        		$(item).UIIdentifyChildNodes();
+        	});
 		}); 
     </script>
     
@@ -37,7 +42,7 @@
 				<scrollpanel>
 					<tableview>
 						<tablecell href="#people_view" ui-implements="detail-disclosure">
-							<celltitle>People</celltitle>
+							<celltitle id="Peeps">People</celltitle>
 						</tablecell>
 						<tablecell href="#places_view" ui-implements="detail-disclosure">
 							<celltitle>Places</celltitle>
