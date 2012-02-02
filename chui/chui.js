@@ -1,3 +1,17 @@
+/*
+    pO\		
+   6  /\
+     /OO\
+    /OOOO\
+  /OOOOOOOO\
+ ((OOOOOOOO))
+  \:~=++=~:/   
+ 
+ChocolateChip-UI for Zepto
+Copyright 2011 Robert Biggs: www.chocolatechip-ui.com
+License: BSD
+Version: 1.0
+*/
 $(function() {
 	$.body = $("body");
 	$.app = $("app");
@@ -41,6 +55,26 @@ $.extend($, {
 			   $.UINavigateBack();
 			}
 		});
+	},
+	
+	UINavigateToNextView : function(viewID) {
+		$($.UINavigationHistory[$.UINavigationHistory.length-1])
+			.attr("ui-navigation-status","traversed");
+		$(viewID).attr("ui-navigation-status","current");
+		$.UINavigationHistory.push(viewID);
+		if ($.app.attr("ui-kind") === "navigation-with-one-navbar") {
+			$("navbar uibutton[ui-implements=back]").css("display","block");
+		}
+	},
+	
+	resetApp : function ( hard ) {
+		if (hard === "hard") {
+			window.location.reload(true);
+		} else {
+			$.views.attr("ui-navigation-status", "upcoming");
+			$.main.attr("ui-navigation-status", "current");
+			$.UINavigationHistory = ["#main"];
+		}
 	},
 	
 	UINavigationEvent : false,
@@ -265,8 +299,8 @@ $.extend($, {
 		if ((toolbarEl.children().eq(0)[0].nodeName) === "UIBUTTON") {
 			toolbarEl.children().eq(0).attr("ui-contains","uibutton");
 		}
-		var deleteButtonTemp = '<uibutton ui-bar-align="left" ui-implements="delete" class="disabled" style="display: none;"><label>' + label3 + '</label></uibutton>';
-		var editButtonTemp = '<uibutton ui-bar-align="right"  ui-implements="edit" ui-button-labels="' + label1 + ',' + label2 +  '"><label>' + label1 + '</label></uibutton>';
+		var deleteButtonTemp = '<uibutton ui-kind="deletionListDeleteButton" ui-bar-align="left" ui-implements="delete" class="disabled" style="display: none;"><label>' + label3 + '</label></uibutton>';
+		var editButtonTemp = '<uibutton ui-kind="deletionListEditButton" ui-bar-align="right"  ui-implements="edit" ui-button-labels="' + label1 + ',' + label2 +  '"><label>' + label1 + '</label></uibutton>';
 		toolbarEl.prepend(deleteButtonTemp);
 		toolbarEl.append(editButtonTemp);
 		var deleteDisclosure = '<deletedisclosure><span>&#x2713</span></deletedisclosure>';
@@ -337,12 +371,30 @@ $.extend($, {
 				   listEl.attr("data-deletable-items", 0);
 			   });
 			   $(this).addClass("disabled");
-			selector.closest("view").find("scrollpanel").data("ui-scroller").refresh();
+			
+			var whichScroller = selector.closest("view").find("scrollpanel").attr("ui-scroller");
+			$.UIScrollers[whichScroller].refresh();
 		   });
 		};
 		UIEditExecution();
 		UIDeleteDisclosureSelection();
 		UIDeletionExecution(); 
+	},
+	
+	UIResetDeletionList : function(node, toolbar) {
+		node = $(node);
+		toolbar = $(toolbar);
+		if (node.hasClass("ui-show-delete-disclosures")) {
+			node.attr("data-deletable-items", 0);
+			node.find("deletedisclosure").removeClass("checked");
+			node.removeClass("ui-show-delete-disclosures");
+			var resetLabel = toolbar.find("uibutton[ui-kind=deletionListEditButton]").attr("ui-button-labels");
+			resetLabel = resetLabel.split(",");
+			resetLabel = resetLabel[0];
+			toolbar.find("uibutton[ui-kind=deletionListEditButton] > label").text(resetLabel);
+			toolbar.find("uibutton[ui-kind=deletionListEditButton]").attr("ui-implements", "edit");
+			toolbar.find("uibutton[ui-kind=deletionListDeleteButton]").css("display", "none");
+		}
 	}
 });
 $.extend($, {
@@ -713,7 +765,7 @@ $.fn.UISegmentedControl = function( container, callback ) {
 		that.attr("ui-segmented-container", ("#" + container.attr("id")));
 		var selectedIndex = this.attr("ui-selected-index");
 		var whichScroller = container.closest("scrollpanel").attr("ui-scroller");
-		$.UIScrollers[whichScroller].refresh()
+		$.UIScrollers[whichScroller].refresh();
 		//$.UIScrollers[whichScroller] = new iScroll(container.closest("scrollpanel")[0]);
 	}
 
