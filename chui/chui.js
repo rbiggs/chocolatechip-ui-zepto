@@ -394,7 +394,9 @@ $.extend($, {
 			toolbar.find("uibutton[ui-kind=deletionListEditButton] > label").text(resetLabel);
 			toolbar.find("uibutton[ui-kind=deletionListEditButton]").attr("ui-implements", "edit");
 			toolbar.find("uibutton[ui-kind=deletionListDeleteButton]").css("display", "none");
+			toolbar.find("uibutton[ui-kind=deletionListDeleteButton]").toggleClass('disabled');
 		}
+		node.find('tablecell').removeClass('deletable');
 	}
 });
 $.extend($, {
@@ -759,14 +761,12 @@ $.fn.UISegmentedControl = function( container, callback ) {
 		} else {
 			container.attr("ui-selected-index", 0);
 		}
-		container.attr("ui-implements","segmented-panel");
 		container.children().css("display: none;");
 		container.children().eq(val).css("display","block");
 		that.attr("ui-segmented-container", ("#" + container.attr("id")));
 		var selectedIndex = this.attr("ui-selected-index");
 		var whichScroller = container.closest("scrollpanel").attr("ui-scroller");
 		$.UIScrollers[whichScroller].refresh();
-		//$.UIScrollers[whichScroller] = new iScroll(container.closest("scrollpanel")[0]);
 	}
 
 	buttons.each(function() {
