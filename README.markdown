@@ -1,7 +1,7 @@
 ----
 ChocolateChip-UI - A Compact JavaScript Framework for Mobile Webkit Apps
 ----
--
+
 -ChocolateChip-UI is a mobile Web app framework using HTML5, WAML, CSS and JavaScript. This version runs on top of Zepto. If you have been using Zepto for you mobile Web app needs, this can round out your needs nicely. You can take advantage of the rich feature set of ChocolateChip-UI running on top of Zepto for a complete development framework.
 -
 -ChocolateChip-UI uses specially defined markup for clarity and conciseness to construct your app. ChocolateChip-UI's CSS and JavaScript will imbue the app with styling and basic functionality. Using simple one-liners you can active handed coded markup into sophisticated controls. Or with simple initialization routines you can create controls dynamically.

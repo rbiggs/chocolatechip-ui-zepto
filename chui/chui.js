@@ -512,6 +512,15 @@ $.extend($, {
 				$(this).addClass("disabled");
 			}
 		}
+	},
+	
+	resetSpinner : function(selector) {
+		var value = $(selector).data("range-value")
+		value = value[0]
+		$(selector).find("label").text(value);
+		$(selector).find("uibutton").eq(0).addClass("disabled");
+		$(selector).find("uibutton").eq(1).removeClass("disabled");
+		
 	}	
 });
 $.extend($, {
