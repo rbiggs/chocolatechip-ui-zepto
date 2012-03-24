@@ -55,7 +55,7 @@ var m = Math,
 			doc = document,
 			i;
 
-		that.wrapper = typeof el == 'object' ? el.parentNode : doc.querySelector(el).parentNode;
+		that.wrapper = el.nodeType === 1 ? el.parentNode : doc.querySelector(el).parentNode;
 		that.wrapper.style.overflow = 'hidden';
 		that.scroller = that.wrapper.children[0];
 

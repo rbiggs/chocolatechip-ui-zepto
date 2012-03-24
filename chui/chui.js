@@ -979,7 +979,7 @@ $.fn.UIActionSheet = function(opts) {
 		if (actionSheetColor) {
 			actionSheetStr += " ui-action-sheet-color='" + actionSheetColor + "'";
 		}
-		actionSheetStr += "><scrollpanel>";
+		actionSheetStr += "><scrollpanel  ui-scroller='" + $.UIUuid() + "'><panel>";
 		actionSheetStr += title;
 		var uiButtons = "", uiButtonObj, uiButtonImplements, uiButtonTitle, uiButtonCallback;
 		if (!!opts.uiButtons) {
@@ -995,7 +995,7 @@ $.fn.UIActionSheet = function(opts) {
 				uiButtons +=	"</label></uibutton>"	;			
 			}
 		}
-		actionSheetStr += uiButtons + "<uibutton ui-kind='action' ui-implements='cancel' class='stretch' onclick='$.UIHideActionSheet(\"#" + actionSheetID + "\")'><label>Cancel</label></uibutton></scrollpanel></actionsheet>";
+		actionSheetStr += uiButtons + "<uibutton ui-kind='action' ui-implements='cancel' class='stretch' onclick='$.UIHideActionSheet(\"#" + actionSheetID + "\")'><label>Cancel</label></uibutton></panel></scrollpanel></actionsheet>";
 		var actionSheet = $(actionSheetStr);
 		that.append(actionSheet);
 	};
@@ -1005,7 +1005,7 @@ $.fn.UIActionSheet = function(opts) {
 		$.UIHideActionSheet();
 	});
 	
-	var scroller = new iScroll($("#" + actionSheetID)[0]);
+	var scroller = new iScroll($("#actionsheet_01").find('scrollpanel')[0]);
 	$("#" + actionSheetID).data("ui-scroller", scroller);
 };
 $.extend($, {
