@@ -9,33 +9,12 @@
     <script src="../chui/zepto.js"></script>
     <script src="../chui/chui.js"></script>
     <script src="../chui/iscroll.js"></script>
-    <script>
-		$.extend($, {
-			beep : function(msg) {
-				return console.log(msg);
-			}
-		}); 
-        $(function() {
-        	$("#Peeps").css("height", $("#Peeps").css("height"));
-        	$('uibutton[ui-implements="bozo"]').bind("click", function() {
-        		$(this).UIToggleButtonLabel("Bozo","Clown");
-        		$("#Peeps").anim({height: "100px", "font-size": "40px", "background-color": "green"}, 5, "ease-in-out");
-        	});
-        	$.beep("hi from me.");
-        	$("tableview").each(function(idx, item) {
-        		$(item).UIIdentifyChildNodes();
-        	});
-		}); 
-    </script>
     
 </head>
 <body>
 	<app ui-background-style="striped">
 		<view id="main" ui-background-style="striped" ui-navigation-status="current">
 			<navbar>
-				<uibutton ui-implements="bozo" ui-bar-align="left">
-					<label>Bozo</label>
-				</uibutton>
 				<h1>Tableview</h1>
 			</navbar>
 			<subview ui-associations="withNavBar">

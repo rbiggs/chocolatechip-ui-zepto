@@ -37,22 +37,14 @@
 		/* Local JavaScript Here */
 	
 		$(function() {
-			 // Initialize click events for switch controls.
-             $("tableview switchcontrol").bind("click", function () {
-                if ($(this).hasClass("on")) {
-                    $("#switchResponse").text($(this).find("input").val());
-                } else {
-                    $("#switchResponse").empty();
-                }
-			});
 			
 			// This is for a dynamically created switch control:
 			var switchOpts = {
-				id : "myBestSwitch",
-				customClass : "customSwitchColor",
+				id : "breakfastSwtich",
+				customClass : "green",
 				kind : "traditional",
 				status : "on",
-				value : "sort of working",
+				value : "So, what's the first course?",
 				callback : function(item) {
 					if (item.find("input")[0].checked === false) {
 						console.log("This is off!");
@@ -64,7 +56,17 @@
 			
 			// Uncomment this line to see dynamically created
 			// switch control inserted in response paragraph:
-			$("p:last-of-type").UICreateSwitchControl(switchOpts);
+			$("tableview:last-of-type tablecell").UICreateSwitchControl(switchOpts);
+			
+			 // Initialize click events for switch controls.
+             $("tableview switchcontrol").bind("click", function () {
+                if ($(this).hasClass("on")) {
+                    $("#switchResponse").text($(this).find("input").val());
+                } else {
+                    $("#switchResponse").empty();
+                }
+			});
+			
 		});
 		
 	</script>
@@ -102,12 +104,6 @@
                     <tableview ui-kind="grouped">
                     	<tablecell>
                         <celltitle>Breakfast</celltitle>
-                        <switchcontrol ui-kind="traditional" class="off green" id="breakfastSwtich" ui-implements="attention">
-                            <label ui-implements="on">ON</label>
-                            <thumb><thumbprop></thumbprop></thumb>
-                            <label ui-implements="off">OFF</label>
-							<input type="checkbox" value="So, what's the first course?" name="breakfastSwtich">
-                        </switchcontrol>
                     	</tablecell>
                     </tableview>
                     <p ui-kind="grouped">

@@ -32,6 +32,13 @@
 
 </head>
 <body ui-background-style="slanted-right">
+	<app ui-background-style="striped">
+		<view id="main" ui-background-style="striped" ui-navigation-status="current">
+			<navbar>
+				<h1>Buttons</h1>
+			</navbar>
+			<subview ui-associations="withNavBar">
+				<scrollpanel>
 	<stack ui-box="horizontal">
 		<uibutton ui-implements="back" ui-bar-align="left">
 			<label>Back</label>
@@ -69,13 +76,12 @@
 			 <label>Message</label>
 		 </uibutton>
 		 <uibutton ui-implements="icon">
-			 <icon style="-webkit-mask-image: url(../icons/cabinet.svg);">
+			 <icon style="-webkit-mask-image: url(../icons/cabinet.svg);"></icon>
 		 </uibutton>
 		 <uibutton class="disabled" ui-bar-align="right">
 			 <label>Favorites</label>
 		 </uibutton>
 	 </stack>
-		</stack>
 	
 	<stack ui-box="horizontal">
 		<uibutton ui-implements="icon">
@@ -98,7 +104,7 @@
 	</stack>
 	<stack ui-box="horizontal" style="background-color: #666;">
 		<uibutton ui-kind="icon">
-			<icon style="-webkit-mask-image: url(../icons/film.svg);">
+			<icon style="-webkit-mask-image: url(../icons/film.svg);"></icon>
 		</uibutton>
 		<uibutton ui-kind="icon">
 			<icon style="-webkit-mask-image: url(../icons/files.svg); background-color: #ffe7c9;"></icon>
@@ -107,7 +113,7 @@
 			<icon style="-webkit-mask-image: url(../icons/cog.svg);"></icon>
 		</uibutton>
 		<uibutton ui-kind="icon">
-			<icon style="-webkit-mask-image: url(../icons/download.svg); background-image: -webkit-gradient(linear, 0 0, 30% 100%, from(yellow), color-stop(0.45, orange), to(red));">
+			<icon style="-webkit-mask-image: url(../icons/download.svg); background-image: -webkit-gradient(linear, 0 0, 30% 100%, from(yellow), color-stop(0.45, orange), to(red));"></icon>
 		</uibutton>
 		<uibutton ui-kind="icon">
 			<icon style="-webkit-mask-image: url(../icons/add.svg);"></icon>
@@ -122,12 +128,17 @@
 		<label>Add to Favorites</label>
 	</uibutton>
 	</stack>
-	<uibutton ui-implements="attention" ui-kind="rounded-rectangle" class="stretch">
+	<stack>
+		<uibutton ui-implements="attention" ui-kind="rounded-rectangle" class="stretch">
 		<label>View Account</label>
 	</uibutton>
-	<uibutton ui-implements="done" ui-kind="rounded-rectangle" ui-icon-align="right" class="stretch disabled">
+		<uibutton ui-implements="done" ui-kind="rounded-rectangle" ui-icon-align="right" class="stretch disabled">
 		<label>Sign Out</label>
 	</uibutton>
-</stack>
+	</stack>
+    			</scrollpanel>
+    		</subview>
+    	</view>
+    </app>
 </body>
 </html>
