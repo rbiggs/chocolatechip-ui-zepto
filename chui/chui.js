@@ -10,7 +10,7 @@
 ChocolateChip-UI for Zepto
 Copyright 2011 Robert Biggs: www.chocolatechip-ui.com
 License: BSD
-Version: 1.0
+Version: 1.0.1
 */
 $(function() {
 	$.body = $("body");
@@ -20,6 +20,32 @@ $(function() {
 	$.tablet = window.innerWidth > 600;
 	$(window).bind("resize", function() {
 		$.tablet = window.innerWidth > 600;
+	});
+	$.touchEnabled = ('ontouchstart' in window);
+	if (!$.touchEnabled) {
+		var stylesheet = $('head').find('link[rel=stylesheet]').attr('href');
+		var stylesheet1 = stylesheet.replace(/chui\.css/, 'chui.desktop.css');
+		$('head').append('<link rel="stylesheet" href="' + stylesheet1 + '">');
+	}
+});
+$.fn.UIHandleTouchState = function(delay) {
+	if ($.UIScrollingActive) return;
+	delay = delay || 200;
+	var $this = $(this);
+	if ($.touchEnabled) {
+		this.addClass('touched');
+		setTimeout(function() {
+			$this.removeClass('touched');
+		}, delay);
+	}
+};
+$(function() {
+	$.app.delegate('uibutton', 'click', function() {
+		if ($(this).hasClass('disabled')) {
+			return false;
+		} else {
+			$(this).UIHandleTouchState();
+		}
 	});
 });
 $.extend($, {
@@ -41,23 +67,27 @@ $.extend($, {
 	},
 	UINavigationHistory : ["#main"],
 	UINavigateBack : function() {
-		$($.UINavigationHistory[$.UINavigationHistory.length-1]).attr( "ui-navigation-status", "upcoming");
+		var parent = $.UINavigationHistory[$.UINavigationHistory.length-1];
 		$.UINavigationHistory.pop();
 		$($.UINavigationHistory[$.UINavigationHistory.length-1])
-		.attr("ui-navigation-status", "current");
-		if ($.app.attr("ui-kind")==="navigation-with-one-navbar" && $.UINavigationHistory[$.UINavigationHistory.length-1] === "#main") {
-			$("navbar > uibutton[ui-implements=back]", $.app).css("display","none");
+		.attr('ui-navigation-status', 'current');
+		$(parent).attr('ui-navigation-status', 'upcoming');
+		if ($.app.attr('ui-kind')==='navigation-with-one-navbar' && $.UINavigationHistory[$.UINavigationHistory.length-1] === '#main') {
+			$('navbar > uibutton[ui-implements=back]', $.app).css('display','none');
 		}
 	},
 	UIBackNavigation : function () {
 		$.app.delegate("uibutton", "click", function() {
 			if ($(this).attr("ui-implements") === "back") {
-			   $.UINavigateBack();
+			   if ($.UINavigationListExits) {
+			   	   $.UINavigateBack();
+			   }
 			}
 		});
 	},
 	
 	UINavigateToNextView : function(viewID) {
+		$.UINavigationListExits = true;
 		$($.UINavigationHistory[$.UINavigationHistory.length-1])
 			.attr("ui-navigation-status","traversed");
 		$(viewID).attr("ui-navigation-status","current");
@@ -77,50 +107,66 @@ $.extend($, {
 		}
 	},
 	
+	UINavigationListExits : false,
+	
 	UINavigationEvent : false,
+	
+	UINavigationEnabled : false,
 	
     UINavigationList : function() {
 		var navigateList = function(item) {
-			if ($.app.attr("ui-kind")==="navigation-with-one-navbar") {
-				$.app.find("navbar > uibutton[ui-implements=back]").css("display", "block");
-			}
-			$(item.attr("href")).attr("ui-navigation-status", "current");
-			$($.UINavigationHistory[$.UINavigationHistory.length-1])
-				.attr("ui-navigation-status", "traversed");
-			if ($.main.attr("ui-navigation-status") !== "traversed") {
-				$.main.attr("ui-navigation-status", "traversed");
-			}
-			$.UINavigationHistory.push(item.attr("href"));
+			try {
+				if ($.app.attr("ui-kind")==="navigation-with-one-navbar") {
+					$.app.find("navbar > uibutton[ui-implements=back]").css("display", "block");
+				}
+				$(item.attr("href")).attr("ui-navigation-status", "current");
+				$($.UINavigationHistory[$.UINavigationHistory.length-1])
+					.attr("ui-navigation-status", "traversed");
+				if ($.main.attr("ui-navigation-status") !== "traversed") {
+					$.main.attr("ui-navigation-status", "traversed");
+				}
+				$.UINavigationHistory.push(item.attr("href"));
+			} catch(err) {}
 		};
         $.app.delegate("tablecell", "click", function() {
             if ($(this).attr("href")) {
-	            if ($.UINavigationEvent) {
-	                return;
-	            } else {
-					$.UINavigationEvent = false;
-	                navigateList($(this));
-					$.UINavigationEvent = true;
-	            }
+            	$.UINavigationListExits = true;
+            	var $this = $(this);
+            	setTimeout(function() {
+            		$this.UIHandleTouchState();
+					if ($.UINavigationEvent) {
+						return;
+					} else {
+						$.UINavigationEnabled = true;
+						$.UINavigationEvent = false;
+						navigateList($this);
+						$.UINavigationEvent = true;
+					}
+				}, 100);
             }
         });
-		$.app.delegate("tablecell", "touchStart", function() {
-			if ($(this).attr("href")) {
-				if ($.UINavigationEvent) {
-					return;
-				} else {
-					$.UINavigationEvent = false;
-					navigateList($(this));
-					$.UINavigationEvent = true;
-				}
-			}
-		});
 	}
 });
+$.fn.UIHandleTouchState = function(delay) {
+	if ($.UIScrollingActive) return;
+	delay = delay || 200;
+	var $this = $(this);
+	if ($.touchEnabled) {
+		$this.addClass('touched');
+		setTimeout(function() {
+			$this.removeClass('touched');
+		}, delay);
+	}
+};
 $(function() {
+	if (!$.touchEnabled) {
+		var stylesheet = $('head').find('link[rel=stylesheet]').attr('href');
+		var stylesheet1 = stylesheet.replace(/chui\.css/, 'chui.desktop.css');
+		$('head').append('<link rel="stylesheet" href="' + stylesheet1 + '">');
+	}
     $.UIBackNavigation();
     $.UINavigationList();
     $.app.delegate("view","webkitTransitionEnd", function() {
-		//if (!document.querySelector("view[ui-navigation-status=current]")) {
 		if (!$("view[ui-navigation-status=current]")[0]) {
 			$($.UINavigationHistory[$.UINavigationHistory.length-1])     
                 .attr("ui-navigation-status", "current");
@@ -130,27 +176,7 @@ $(function() {
     });    
 });
 
-$.fn.UIToggleButtonLabel = function ( label1, label2 ) {
-	return this.each(function(){
-    	var $this = $(this);
-		if ($this.find("label").text() === label1) {
-			$this.find("label").text(label2);
-		} else {
-			$this.find("label").text(label1);
-		}
-	});
-};
-$.fn.toggleClassName = function( firstClassName, secondClassName ) {
-	if (!$(this).hasClass(firstClassName)) {
-	   $(this).addClass(firstClassName);
-	   $(this).removeClass(secondClassName);
-	} else {
-		$(this).removeClass(firstClassName);
-		$(this).addClass(secondClassName);
-	}
-};
 $.extend($, {
-	
 	UIScrollers : {},
 	UIEnableScrolling : function ( options ) {
 		$("scrollpanel").each(function() {
@@ -168,6 +194,34 @@ $.extend($, {
 $(function() {
 	$.UIEnableScrolling();
 });
+$.fn.UIToggleButtonLabel = function ( label1, label2 ) {
+	return this.each(function(){
+    	var $this = $(this);
+		if ($this.find("label").text() === label1) {
+			$this.find("label").text(label2);
+		} else {
+			$this.find("label").text(label1);
+		}
+	});
+};
+$(function() {
+	$.app.delegate('uibutton', 'touchstart', function() {
+		if ($(this).hasClass('disabled')) {
+			return false;
+		} else {
+			$(this).UIHandleTouchState();
+		}
+	});
+});
+$.fn.toggleClassName = function( firstClassName, secondClassName ) {
+	if (!$(this).hasClass(firstClassName)) {
+	   $(this).addClass(firstClassName);
+	   $(this).removeClass(secondClassName);
+	} else {
+		$(this).removeClass(firstClassName);
+		$(this).addClass(secondClassName);
+	}
+};
 $.fn.UIIdentifyChildNodes = function ( ) {
 	var kids = $(this).children();
 	kids.each(function(idx, kid) {
@@ -585,11 +639,9 @@ $.extend($, {
 		$.UIPopUpIsActive = true;
 		$.UIPopUpIdentifier = selector;
 		var popup = $(selector);
-		console.log(selector);
 		var pos = {};
 		pos.top = ((window.innerHeight /2) + window.pageYOffset) - (popup[0].clientHeight /2);
 		pos.left = (window.innerWidth / 2) - (popup[0].clientWidth / 2);
-		console.log(pos);
 		popup.css(pos); 
 	},
 	UIRepositionPopupOnOrientationChange : function ( ) {
@@ -639,12 +691,17 @@ $.fn.UISelectionList = function ( callback ) {
 		if (this.nodeName.toLowerCase() === "tablecell") {
 			this.insertAdjacentHTML("afterBegin", "<checkmark>&#x2713</checkmark>");
 			$(this).bind("click", function() {
-				$(this).siblings().removeClass("selected");
-				$(this).addClass("selected");
-				$(this).find("input")[0].checked = true; 
-				if (callback) {
-					callback.call(callback, $(this).find("input"));
-				}
+				var $this = $(this);
+				setTimeout(function() {
+					if ($.UIScrollingActive) return;
+					$this.siblings().removeClass("selected").removeClass('touched');
+					$this.addClass("selected");
+					$this.UIHandleTouchState();
+					$this.find("input")[0].checked = true; 
+					if (callback) {
+						callback.call(callback, $this.find("input"));
+					}
+				}, 150);
 			});
 		}
 	});
@@ -737,7 +794,7 @@ $.fn.UISegmentedControl = function( container, callback ) {
 	var val = 0;
 	callback = callback || function(){};
 	var buttons = $(this).children();
-	var cont = $(container);
+	var container = $(container);
 	if (!$(this).attr('ui-selected-segment')) {
 		$(this).attr("ui-selected-segment", "");
 	}
@@ -770,12 +827,12 @@ $.fn.UISegmentedControl = function( container, callback ) {
 		} else {
 			container.attr("ui-selected-index", 0);
 		}
-		container.children().css("display: none;");
+		container.children().css("display", "none");
 		container.children().eq(val).css("display","block");
 		that.attr("ui-segmented-container", ("#" + container.attr("id")));
 		var selectedIndex = this.attr("ui-selected-index");
-		var whichScroller = container.closest("scrollpanel").attr("ui-scroller");
-		$.UIScrollers[whichScroller].refresh();
+		var whichScroller = $(this).closest("scrollpanel").attr("ui-scroller");
+					$.UIScrollers[whichScroller].refresh()
 	}
 
 	buttons.each(function() {
@@ -789,6 +846,7 @@ $.fn.UISegmentedControl = function( container, callback ) {
 			}
 		}
 		$(this).bind("click", function() {
+			if ($(this).hasClass('disabled')) return false;
 			var selectedSegment = that.attr("ui-selected-segment");
 			var selectedIndex = that.attr("ui-selected-index");
 			var uicp = $(this).attr("ui-child-position");
@@ -809,7 +867,7 @@ $.fn.UISegmentedControl = function( container, callback ) {
 				container.attr("ui-selected-index", uicp);
 				container.children().eq(selectedIndex).css("display", "none");						
 				container.children().eq(uicp).css("display","-webkit-box");
-				var whichScroller = container.closest("scrollpanel").attr("ui-scroller");
+				var whichScroller = $(this).closest("scrollpanel").attr("ui-scroller");
 				$.UIScrollers[whichScroller].refresh()
 			}
 			$(this).addClass("selected");
@@ -818,13 +876,14 @@ $.fn.UISegmentedControl = function( container, callback ) {
 	});
 	$(this).UIIdentifyChildNodes();
 };
-
 $(function() {	 
 	$("segmentedcontrol").each(function(idx) {
 		if ($(this).attr("ui-implements") !== "segmented-paging") {
 			$(this).UISegmentedControl();
 			var whichScroller = $(this).closest("scrollpanel").attr("ui-scroller");
-			$.UIScrollers[whichScroller].refresh()
+			if (whichScroller) {
+				$.UIScrollers[whichScroller].refresh()
+			}
 		}
 	});
 });
@@ -970,6 +1029,7 @@ $.fn.UIActionSheet = function(opts) {
 	var that = $(this);
 	var actionSheetID = opts.id;
 	var actionSheetColor =  opts.color;
+	var actionSheetUuid = $.UIUuid();
 	var title = "";
 	if (opts.title) {
 		title = "<p>" + opts.title + "</p>";
@@ -979,7 +1039,7 @@ $.fn.UIActionSheet = function(opts) {
 		if (actionSheetColor) {
 			actionSheetStr += " ui-action-sheet-color='" + actionSheetColor + "'";
 		}
-		actionSheetStr += "><scrollpanel  ui-scroller='" + $.UIUuid() + "'><panel>";
+		actionSheetStr += "><scrollpanel  ui-scroller='" + actionSheetUuid + "'><panel>";
 		actionSheetStr += title;
 		var uiButtons = "", uiButtonObj, uiButtonImplements, uiButtonTitle, uiButtonCallback;
 		if (!!opts.uiButtons) {
@@ -998,15 +1058,14 @@ $.fn.UIActionSheet = function(opts) {
 		actionSheetStr += uiButtons + "<uibutton ui-kind='action' ui-implements='cancel' class='stretch' onclick='$.UIHideActionSheet(\"#" + actionSheetID + "\")'><label>Cancel</label></uibutton></panel></scrollpanel></actionsheet>";
 		var actionSheet = $(actionSheetStr);
 		that.append(actionSheet);
+		var scrollpanel = $('#'+actionSheetID).find('scrollpanel')[0];
+		$.UIScrollers[actionSheetUuid] = new iScroll(scrollpanel);
 	};
 	createActionSheet();
 	var actionSheetUIButtons = "#" + actionSheetID + " uibutton";
 	$(actionSheetUIButtons).bind("click", function() {
 		$.UIHideActionSheet();
 	});
-	
-	var scroller = new iScroll($("#actionsheet_01").find('scrollpanel')[0]);
-	$("#" + actionSheetID).data("ui-scroller", scroller);
 };
 $.extend($, {
 	UIShowActionSheet : function(actionSheetID) {
@@ -1019,6 +1078,8 @@ $.extend($, {
 		screenCover.bind("touchmove", function(e) {
 			e.preventDefault();
 		});
+		var whichScroller = $(actionSheetID).find("scrollpanel").attr("ui-scroller");
+		$.UIScrollers[whichScroller].refresh();
 	},
 	UIHideActionSheet : function() {
 		var actionSheet = $.app.data("ui-action-sheet-id");
@@ -1531,8 +1592,8 @@ $.extend($, {
 		try {
 			var count = 0;
 			$("popover scrollpanel").each(function(idx, item) {
-				item.setAttribute("ui-scroller", $.UIUuid());
-				var whichScroller = item.getAttribute("ui-scroller");
+				item.attr("ui-scroller", $.UIUuid());
+				var whichScroller = item.attr("ui-scroller");
 				$.UIScrollers[whichScroller] = new iScroll(item.parentNode);
 			});
 		} catch(e) { }

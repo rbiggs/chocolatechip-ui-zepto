@@ -2,6 +2,7 @@
  * iScroll v4.1.9 ~ Copyright (c) 2011 Matteo Spinelli, http://cubiq.org
  * Released under MIT license, http://cubiq.org/license
  */
+$.UIScrollingActive = false;
 (function(){
 var m = Math,
 	mround = function (r) { return r >> 0; },
@@ -320,6 +321,7 @@ iScroll.prototype = {
 	},
 	
 	_start: function (e) {
+		$.UIScrollingActive = true;
 		var that = this,
 			point = hasTouch ? e.touches[0] : e,
 			matrix, x, y,
@@ -471,6 +473,7 @@ iScroll.prototype = {
 	},
 	
 	_end: function (e) {
+		$.UIScrollingActive = false;
 		if (hasTouch && e.touches.length != 0) return;
 
 		var that = this,

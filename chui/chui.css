@@ -1,11 +1,11 @@
 /*
-    pO\     
+    pO\		
    6  /\
      /OO\
     /OOOO\
   /OOOOOOOO\
  ((OOOOOOOO))
-  \:~=++=~:/   
+  \:~=++=~:/    
  
 ChocolateChip-UI
 Three yummy ingredients make this something to sink your teeth into:
@@ -17,7 +17,7 @@ WAML makes coding a Web app logical and straightforward, the way it was meant to
 
 Copyright 2011 Robert Biggs: www.chocolatechip-ui.com
 License: BSD
-Version: 1.0
+Version: 1.0.1
 
 */
 html, body {
@@ -65,17 +65,28 @@ view {
 	bottom: 0;
 	right: 0;
 }
-view[ui-navigation-status="upcoming"] {
+view[ui-navigation-status='upcoming'] {
 	-webkit-transform: translateX(100%);
 	-webkit-transform: translate3d(100%,0,0);
 }
-view[ui-navigation-status="current"] {
+view[ui-navigation-status='current'] {
 	-webkit-transform: translateX(0);
 	-webkit-transform: translate3d(0,0,0);
 }
-view[ui-navigation-status="traversed"] {
+view[ui-navigation-status='traversed'] {
 	-webkit-transform: translateX(-100%);
 	-webkit-transform: translate3d(-100%,0,0);
+}
+view[ui-navigation-status="upcoming"],
+subview[ui-paging-orient=horizontal][ui-navigation-status=upcoming],
+subview[ui-paging-orient=vertical][ui-navigation-status=upcoming] {
+	visibility: hidden;
+}
+
+view[ui-navigation-status="current"],
+subview[ui-paging-orient=horizontal][ui-navigation-status=current],
+subview[ui-paging-orient=vertical][ui-navigation-status=current] {
+	visibility: visible;
 }
 subview > scrollpanel {
 	height: auto;
@@ -95,8 +106,8 @@ subview[ui-associations=withTopToolBar] {
 	top: 45px;
 	bottom: 0px;
 }
-subview[ui-associations="withNavBar withBottomToolBar"],  
-subview[ui-associations="withTopToolBar withBottomToolBar"] {
+subview[ui-associations='withNavBar withBottomToolBar'],  
+subview[ui-associations='withTopToolBar withBottomToolBar'] {
 	top: 45px;
 	bottom: 45px;
 }
@@ -104,8 +115,8 @@ subview[ui-associations=withTabBar] {
     top: 0;
     bottom: 49px;
 }
-subview[ui-associations="withNavBar withTabBar"],
-subview[ui-associations="withToolBar withTabBar"] {
+subview[ui-associations='withNavBar withTabBar'],
+subview[ui-associations='withToolBar withTabBar'] {
     top: 45px;
     bottom: 49px;
 }
@@ -461,7 +472,9 @@ stack[ui-implements=segmented-toggle-stack] > panel {display: none;
 	-webkit-box-align: center;
 	-webkit-box-pack: center; 
 }
-stack[ui-implements=segmented-toggle-stack] > panel:first-of-type {display: -webkit-blox;}
+stack[ui-implements=segmented-toggle-stack] > panel:first-of-type {
+	display: -webkit-blox;
+}
 stack[ui-kind=horizontal] {
 	display: -webkit-box;
 	-webkit-box-orient: horizontal;
@@ -541,10 +554,8 @@ uibutton {
    	-webkit-box-orient: horizontal;
    	-webkit-box-align: center;
    	-webkit-box-direction: normal;
-}
-uibutton:hover, 
-uibutton.touched, 
-uibutton[ui-implements=done]:hover, 
+} 
+uibutton.touched,
 uibutton[ui-implements=done].touched {
 	background-image: 
 		-webkit-gradient(linear, left top, left bottom, 
@@ -576,7 +587,7 @@ toolbar uibutton:last-of-type {
 /* Toolbar Plain Icon Styles */
 navbar.ui-box-pack-justify,
 toolbar.ui-box-pack-justify {
-	 -webkit-box-pack: justify;
+	-webkit-box-pack: justify;
 }
 uibutton[ui-kind=icon] {
     height: 43px;
@@ -594,13 +605,13 @@ uibutton[ui-kind=icon] {
 	-webkit-box-pack: center;
 	-webkit-box-align: center;
 }
-uibutton[ui-kind=icon].disabled, uibutton[ui-kind=icon].disabled:hover, uibutton[ui-kind=icon].disabled.touched {
+uibutton[ui-kind=icon].disabled, 
+uibutton[ui-kind=icon].disabled.touched {
 	background: none;
 }
 uibutton[ui-kind=icon].disabled /*> uibuttoncontent*/, uibutton.disabled icon {
 	opacity: 0.75;
-}
-uibutton[ui-kind=icon]:hover, 
+} 
 uibutton[ui-kind=icon].touched {
     background-image:
         -webkit-gradient(radial,50% 50%,0,50% 50%,20,
@@ -617,9 +628,9 @@ icon {
     width: 23px;
     display: inline-block;
 }
-uibutton[ui-kind=icon] icon[style*="webkit-mask-image"], 
-uibutton[ui-kind=icon] icon[style*="webkit-mask-image"],
-icon[ui-implements="icon-mask"] {
+uibutton[ui-kind=icon] icon[style*='webkit-mask-image'], 
+uibutton[ui-kind=icon] icon[style*='webkit-mask-image'],
+icon[ui-implements='icon-mask'] {
 	margin: 0;
 	background-color: #fff;
 }
@@ -630,7 +641,7 @@ uibutton[ui-kind=icon] > icon {
     background-size: 23px 23px;
     margin: 45% auto 0px auto !important;
 }
-uibutton[ui-implements="icon"] {
+uibutton[ui-implements='icon'] {
 	padding: 0px 4px;
 }
 
@@ -646,18 +657,18 @@ uibutton.disabled label, uibutton.disabled icon {
 uibutton icon + label {
 	margin-left: 4px;
 }
-uibutton[ui-icon-align="right"] icon + label {
+uibutton[ui-icon-align='right'] icon + label {
 	margin-left: 0;
 	margin-right: 4px;
 }
-uibutton[ui-icon-align="top"] icon + label {
+uibutton[ui-icon-align='top'] icon + label {
 	margin-left: 0;
 }
-uibutton[ui-icon-align="bottom"] icon + label {
+uibutton[ui-icon-align='bottom'] icon + label {
 	margin-left: 0;
 }
-uibutton[ui-icon-align="right"],
-uibutton[ui-kind=action][ui-icon-align="right"]{
+uibutton[ui-icon-align='right'],
+uibutton[ui-kind=action][ui-icon-align='right']{
     -webkit-box-direction: reverse !important;
     -webkit-box-orient: horizontal !important;
 }
@@ -692,8 +703,7 @@ uibutton[ui-usage=icon] {
 /* End Icon Alignment Styles */
 
 /* Edit uibutton Styles */
-uibutton[ui-implements=done], 
-uibutton[ui-implements=done].disabled:hover, 
+uibutton[ui-implements=done],
 uibutton[ui-implements=done].disabled.touched {
     border: solid 1px #2c344b;
     border-color: #2c344b #2d54b9 #1a49b5 #2d54b9; 
@@ -706,7 +716,6 @@ uibutton[ui-implements=done].disabled.touched {
             color-stop(0.75, #2465dd), 
             to(#2461de));
 }
-uibutton[ui-implements=done]:hover, 
 uibutton[ui-implements=done].touched {
     border-color: #484e59 #54617d #4c5c7a #54617d; 
     background-image: 
@@ -721,7 +730,8 @@ uibutton[ui-implements=done].touched {
 /* End Important Bordered UIButton Styles */
 
 /* Delete uibutton Styles */
-uibutton[ui-implements=delete], uibutton[ui-implements=delete].disabled:hover, uibutton[ui-implements=delete].disabled.touched {
+uibutton[ui-implements=delete], 
+uibutton[ui-implements=delete].disabled.touched {
     border: solid 1px #4b353a;
     border-color: #4b353a #832936 #1a49b5 #832936; 
     background-image:
@@ -733,7 +743,7 @@ uibutton[ui-implements=delete], uibutton[ui-implements=delete].disabled:hover, u
             color-stop(0.75, #a40018), 
             to(#7d1022));
 }
-uibutton[ui-implements=delete]:hover, uibutton[ui-implements=done].touched {
+uibutton[ui-implements=delete].touched {
     border-color: #484e59 #54617d #4c5c7a #54617d; 
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -751,7 +761,6 @@ uibutton[ui-implements=delete].disabled label {
 /* End Warning Bordered UIButton Styles */
 
 /* Back Bordered UIButton Styles */
-uibutton.disabled:hover,
 uibutton.disabled.touched {
 	background-image: 
 		-webkit-gradient(linear, left top, left bottom, 
@@ -763,8 +772,8 @@ uibutton.disabled.touched {
 			to(#546993));
 }			
 uibutton[ui-implements=back] {
-    padding: 0px 7px 0px 3px;
-    margin-left: 20px;
+    padding: 0px 10px 0px 6px;
+    margin-left: 16px;
     position: relative;
     border-left-color: transparent;
 }
@@ -773,28 +782,27 @@ uibutton[ui-implements=back] > label {
     z-index: 1;
 }
 uibutton[ui-implements=back]:before,
-uibutton[ui-implements=back].disabled:hover:before,
 uibutton[ui-implements=back].disabled.touched:before {
-    content: "";
+    content: '';
     display: block;
     z-index: 0;
     background-image: 
         -webkit-gradient(linear, left top, right bottom, 
-            from(#92a1bf), 
+            color-stop(0.1, #92a1bf),
             color-stop(0.3, #798aad),
             color-stop(0.51, #6276a0), 
             color-stop(0.51, #556a97), 
             color-stop(0.75, #566c98),
             to(#546993)); 
-    border-left: solid 1px #484e59;
-    border-bottom: solid 1px #9aa5bb;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-bottom-right-radius: 5px;
+    border-left: solid 1px #54617D;
+    border-bottom: solid 1px #9AA5BB; 
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-bottom-right-radius: 7px;
     -webkit-border-bottom-left-radius: 4px;
-    height: 23.5px;
-    width: 23.5px;
+    height: 22.2px;
+    width: 22.2px;
     display: inline-block;
-    -webkit-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg) skew(6deg, 6deg);
     -webkit-mask-image: 
         -webkit-gradient(linear, left bottom, right top, 
             from(#000000), 
@@ -802,15 +810,14 @@ uibutton[ui-implements=back].disabled.touched:before {
             color-stop(0.5, transparent), 
             to(transparent));
     position: absolute;
-    left: -9px;
-    top: 2.5px;
+    left: -8px;
+    top: 3px;
     -webkit-background-clip: content;
 }
-uibutton[ui-implements=back]:hover:before, 
 uibutton[ui-implements=back].touched:before {
     background-image: 
         -webkit-gradient(linear, left top, right bottom, 
-            from(#7d88a5), 
+            color-stop(0.1, #7d88a5), 
             color-stop(0.3, #58698c),
             color-stop(0.51, #3a4e78), 
             color-stop(0.51, #253c6a), 
@@ -822,9 +829,9 @@ uibutton[ui-implements=back].touched:before {
 
 /* Next Bordered UIButton Styles */
 uibutton[ui-implements=next]:last-of-type {
-    padding: 0px 3px 0px 7px;
+    padding: 0px 6px 0px 10px;
     margin-right: 0px;
-    right: 20px !important;
+    right: 16px !important;
     position: relative;
     border-right-color: transparent;
 }
@@ -832,31 +839,28 @@ uibutton[ui-implements=next] > label {
     position: relative;
     z-index: 1;
 }
-uibutton[ui-implements=next]:before,
-uibutton[ui-implements=next].disabled:hover:before, 
+uibutton[ui-implements=next]:before, 
 uibutton[ui-implements=next].disabled.touched:before  {
-    content: "";
+    content: '';
     display: block;
     z-index: 0;
     background-image: 
         -webkit-gradient(linear, left top, right bottom, 
-            from(#92a1bf), 
+            color-stop(0.1, #92a1bf),
             color-stop(0.3, #798aad),
             color-stop(0.51, #6276a0), 
             color-stop(0.51, #556a97), 
             color-stop(0.75, #566c98),
             to(#546993)); 
-    border-right: solid 1px #9aa5bb;
+    border-right: solid 1px #484e59;
     border-top: solid 1px #484e59;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-bottom-right-radius: 7px;
     -webkit-border-top-right-radius: 4px;
-    height: 23.5px;
-    width: 23.5px;          
-    height: 23.5px;
-    width: 23.5px;
+    height: 22.2px;
+    width: 22.2px;
     display: inline-block;
-    -webkit-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg) skew(6deg, 6deg);
     -webkit-mask-image: 
         -webkit-gradient(linear, right top, left bottom, 
             from(#000000), 
@@ -864,15 +868,14 @@ uibutton[ui-implements=next].disabled.touched:before  {
             color-stop(0.5, transparent), 
             to(transparent));
     position: absolute;
-    right: -9px;
+    right: -8px;
     top: 2.5px;
     -webkit-background-clip: content;
 }
-uibutton[ui-implements=next]:hover:before, 
 uibutton[ui-implements=next].touched:before {
     background-image: 
         -webkit-gradient(linear, left top, right bottom, 
-            from(#7d88a5), 
+            color-stop(0.1, #7d88a5), 
             color-stop(0.3, #58698c),
             color-stop(0.51, #3a4e78), 
             color-stop(0.51, #253c6a), 
@@ -928,10 +931,8 @@ segmentedcontrol > uibutton {
     margin: 0px !important;
     padding: 0px 10px;
 }
-segmentedcontrol > uibutton:hover, 
 segmentedcontrol > uibutton.touched, 
 segmentedcontrol > uibutton.selected, 
-segmentedcontrol > uibutton.selected:hover, 
 segmentedcontrol > uibutton.selected.touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -940,7 +941,6 @@ segmentedcontrol > uibutton.selected.touched {
     color: #fff;
     border-color: #193a7f;
 }
-segmentedcontrol > uibutton.disabled:hover, 
 segmentedcontrol > uibutton.disabled.touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -994,9 +994,7 @@ toolbar > segmentedcontrol > uibutton {
     -webkit-tap-highlight-color: transparent;
     -webkit-user-select: none;
 }
-navbar > segmentedcontrol > uibutton:hover, 
 navbar > segmentedcontrol > uibutton.selected, 
-navbar > segmentedcontrol > uibutton.selected:hover, 
 navbar > segmentedcontrol > uibutton.selected.touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -1009,9 +1007,7 @@ navbar > segmentedcontrol > uibutton.selected.touched {
     color: #fff;
     border-color: #193a7f;
 }
-navbar > segmentedcontrol > uibutton.disabled:hover, 
 navbar > segmentedcontrol > uibutton.disabled.touched, 
-toolbar > segmentedcontrol > uibutton.disabled:hover, 
 toolbar > segmentedcontrol > uibutton.disabled.touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -1105,7 +1101,7 @@ navbar > segmentedcontrol > uibutton:last-of-type > icon + label {
 	top: -4px;
 }
 /* Rounded Rectangle UIButton Styles */
-uibutton[ui-kind="rounded-rectangle"] {
+uibutton[ui-kind='rounded-rectangle'] {
 	display: -webkit-box !important;
     -webkit-box-sizing: border-box;
     -webkit-box-orient: horizontal;
@@ -1122,10 +1118,8 @@ uibutton[ui-kind="rounded-rectangle"] {
     cursor: pointer;
     padding: 0 8px;
 }
-uibutton[ui-kind="rounded-rectangle"]:hover, 
-uibutton[ui-kind="rounded-rectangle"].touched, 
-uibutton[ui-kind="rounded-rectangle"][ui-implements=attention]:hover, 
-uibutton[ui-kind="rounded-rectangle"][ui-implements=attention].touched {
+uibutton[ui-kind='rounded-rectangle'].touched, 
+uibutton[ui-kind='rounded-rectangle'][ui-implements=attention].touched {
     color: #fff;
     background-image:
         -webkit-gradient(linear, left top, left bottom,
@@ -1133,34 +1127,29 @@ uibutton[ui-kind="rounded-rectangle"][ui-implements=attention].touched {
             color-stop(0.5, #2886eb),
             to(#2874e5));
 }
-uibutton[ui-kind="rounded-rectangle"][ui-implements=attention], 
-uibutton[ui-implements=attention][ui-kind="rounded-rectangle"] {
+uibutton[ui-kind='rounded-rectangle'][ui-implements=attention], 
+uibutton[ui-implements=attention][ui-kind='rounded-rectangle'] {
     color: #000;
 }
-uibutton[ui-kind="rounded-rectangle"][ui-implements=attention]:hover, 
-uibutton[ui-kind="rounded-rectangle"][ui-implements=attention].touched  {
+uibutton[ui-kind='rounded-rectangle'][ui-implements=attention].touched {
     color: #fff;
 }
-uibutton[ui-kind="rounded-rectangle"].disabled span:last-of-type {
+uibutton[ui-kind='rounded-rectangle'].disabled span:last-of-type {
     opacity: 0.5;
 }
-uibutton[ui-kind="rounded-rectangle"].disabled:hover, 
-uibutton[ui-kind="rounded-rectangle"].disabled.touched {
+uibutton[ui-kind='rounded-rectangle'].disabled.touched {
     color: #3c6094;
     background-image: none;
     cursor: auto;
 }
-uibutton[ui-kind="rounded-rectangle"][ui-implements=attention].disabled:hover,
-uibutton[ui-kind="rounded-rectangle"][ui-implements=attention].disabled.touched {
+uibutton[ui-kind='rounded-rectangle'][ui-implements=attention].disabled.touched {
     color: #000;
     background-image: none;
     cursor: auto;
 }
 
-uibuttonn[ui-kind="rounded-rectangle"][ui-implements=attention]:hover, 
-uibuttonn[ui-kind="rounded-rectangle"][ui-implements=attention].touched,
-uibuttonn[ui-implements=attention][ui-kind="rounded-rectangle"]:hover, 
-uibuttonn[ui-implements=attention][ui-kind="rounded-rectangle"].touched{
+uibuttonn[ui-kind='rounded-rectangle'][ui-implements=attention].touched,
+uibuttonn[ui-implements=attention][ui-kind='rounded-rectangle'].touched{
     border-color:a7abae !important;
 }
 
@@ -1184,7 +1173,6 @@ actionsheet > uibutton[ui-kind=action].disabled {
     webkit-box-shadow: none;
 }
 uibutton[ui-kind=action],
-uibutton[ui-kind=action].disabled:hover, 
 uibutton[ui-kind=action].disabled.touched {
     margin: 20px 10px;
     min-width: 110px;
@@ -1207,7 +1195,6 @@ uibutton[ui-kind=action].disabled.touched {
     -webkit-box-align: center;
     -webkit-box-pack: center;
 }
-uibutton[ui-kind=action]:hover, 
 uibutton[ui-kind=action].touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -1238,7 +1225,6 @@ uibutton[ui-kind=action][ui-icon-align=bottom] {
 
 /* Action Cancel uibutton */
 uibutton[ui-kind=action][ui-implements=cancel],
-uibutton[ui-kind=action][ui-implements=cancel].disabled:hover,
 uibutton[ui-kind=action][ui-implements=cancel].disabled.touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -1249,7 +1235,6 @@ uibutton[ui-kind=action][ui-implements=cancel].disabled.touched {
     color: #fff;
     text-shadow: 0 1px 1px #000;
 }
-uibutton[ui-kind=action][ui-implements=cancel]:hover, 
 uibutton[ui-kind=action][ui-implements=cancel].touched  {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -1264,7 +1249,6 @@ uibutton[ui-kind=action][ui-implements=cancel].touched  {
 
 /* Action Delete UIButton */
 uibutton[ui-kind=action][ui-implements=delete],
-uibutton[ui-kind=action][ui-implements=delete].disabled:hover, 
 uibutton[ui-kind=action][ui-implements=delete].disabled.touched  {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -1275,7 +1259,6 @@ uibutton[ui-kind=action][ui-implements=delete].disabled.touched  {
     color: #fff;
     text-shadow: #000 0 1px 0;
 }
-uibutton[ui-kind=action][ui-implements=delete]:hover, 
 uibutton[ui-kind=action][ui-implements=delete].touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -1289,7 +1272,6 @@ uibutton[ui-kind=action][ui-implements=delete].touched {
 
 /* Action Green UIButton */
 uibutton[ui-kind=action].green, 
-uibutton[ui-kind=action].green.disabled:hover, 
 uibutton[ui-kind=action].green.disabled.touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -1300,7 +1282,6 @@ uibutton[ui-kind=action].green.disabled.touched {
     color: #fff;
     text-shadow: 0 1px 1px #000;
 }
-uibutton[ui-kind=action].green:hover, 
 uibutton[ui-kind=action].green.touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -1314,7 +1295,6 @@ uibutton[ui-kind=action].green.touched {
 
 /* Gold Action UIButton */
 uibutton[ui-kind=action].gold,
-uibutton[ui-kind=action].gold.disabled:hover, 
 uibutton[ui-kind=action].gold.disabled.touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -1325,7 +1305,6 @@ uibutton[ui-kind=action].gold.disabled.touched {
     color: #000;
     text-shadow: 0 1px 0 #ccc;
 }
-uibutton[ui-kind=action].gold:hover, 
 uibutton[ui-kind=action].gold.touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -1340,7 +1319,6 @@ uibutton[ui-kind=action].gold.touched {
 
 /* Action Important UIButton */
 uibutton[ui-kind=action][ui-implements=done],
-uibutton[ui-kind=action][ui-implements=done].disabled:hover, 
 uibutton[ui-kind=action][ui-implements=done].disabled.touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom,     
@@ -1351,7 +1329,6 @@ uibutton[ui-kind=action][ui-implements=done].disabled.touched {
     color: #fff;
     text-shadow: 0 1px 1px #000;
 }
-uibutton[ui-kind=action][ui-implements=done]:hover, 
 uibutton[ui-kind=action][ui-implements=done].touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
@@ -1376,10 +1353,8 @@ toolbar.ui-custom-tint {
 	border-bottom: 1px solid #2c2c2c; 
 }
 uibutton.ui-custom-tint, 
-uibutton.ui-custom-tint.disabled:hover, 
 uibutton.ui-custom-tint.disabled.touched, 
-uibutton[ui-implements=done].ui-custom-tint.disabled:hover, uibutton[ui-implements=done].ui-custom-tint.disabled.touched, 
-uibutton[ui-implements=delete].ui-custom-tint.disabled:hover, 
+uibutton[ui-implements=done].ui-custom-tint.disabled.touched, 
 uibutton[ui-implements=delete].ui-custom-tint.disabled.touched {
 	background-image: 
 		-webkit-gradient(linear, left top, left bottom, 
@@ -1390,11 +1365,8 @@ uibutton[ui-implements=delete].ui-custom-tint.disabled.touched {
     border: solid 1px #808080;
     border-color: #6f6f6f #4d4d4d #676767 #616161;
 }
-uibutton.ui-custom-tint:hover, 
 uibutton.ui-custom-tint.touched, 
-uibutton[ui-implements=done].ui-custom-tint:hover, 
 uibutton[ui-implements=done].ui-custom-tint.touched, 
-uibutton[ui-implements=delete].ui-custom-tint:hover, 
 uibutton[ui-implements=delete].ui-custom-tint.touched {
 	background-image: 
 		-webkit-gradient(linear, left top, left bottom, 
@@ -1406,50 +1378,44 @@ uibutton[ui-implements=delete].ui-custom-tint.touched {
 uibutton[ui-implements=back].ui-custom-tint:before {
 	background-image: 
 		-webkit-gradient(linear, left top, right bottom, 
-			color-stop(0.05,rgba(255,255,255,.5)), 
+			color-stop(0.1, rgba(255,255,255,.5)), 
 			color-stop(0.5,rgba(30,30,30,.5)),
 			color-stop(0.5, rgba(0,0,0,.5)), 
-			color-stop(0.95,rgba(0,0,0,.5)));
+			color-stop(0.9,rgba(0,0,0,.5)));
+	-webkit-box-shadow: 0 1px 1px #9AA5BB, 0 -1px 1px #8E96A5;
 }
-uibutton[ui-implements=back].ui-custom-tint:hover:before, 
 uibutton[ui-implements=back].ui-custom-tint.touched:before {
 	background-image: 
 		-webkit-gradient(linear, left top, right bottom, 
-			color-stop(0.05,rgba(0,0,0,.1)), 
+			color-stop(0.1, rgba(0,0,0,.1)), 
 			color-stop(0.5,rgba(0,0,0,.5)), 
 			color-stop(0.5, rgba(0,0,0,.6)), 
-			color-stop(0.95,rgba(255,255,255,.2)));
+			color-stop(0.9,rgba(255,255,255,.2)));
 }
 
 uibutton[ui-implements=next].ui-custom-tint:before {
 	background-image: 
 		-webkit-gradient(linear, left top, right bottom, 
-			color-stop(0.05,rgba(255,255,255,.5)), 
+			color-stop(0.1, rgba(255,255,255,.5)), 
 			color-stop(0.5,rgba(30,30,30,.5)),
 			color-stop(0.5, rgba(0,0,0,.5)), 
-			color-stop(0.95,rgba(0,0,0,.5)));
+			color-stop(0.9,rgba(0,0,0,.5)));
 }
-uibutton[ui-implements=next].ui-custom-tint:hover:before, 
 uibutton[ui-implements=next].ui-custom-tint.touched:before {
 	background-image: 
 		-webkit-gradient(linear, left top, right bottom, 
-			color-stop(0.05,rgba(0,0,0,.1)), 
+			color-stop(0.1, rgba(0,0,0,.1)), 
 			color-stop(0.5,rgba(0,0,0,.5)), 
 			color-stop(0.5, rgba(0,0,0,.6)), 
-			color-stop(0.95,rgba(255,255,255,.2)));
+			color-stop(0.9,rgba(255,255,255,.2)));
 }
 segmentedcontrol > uibutton.ui-custom-tint,
-segmentedcontrol > uibutton.ui-custom-tint.disabled:hover, 
 segmentedcontrol > uibutton.ui-custom-tint.disabled.touched, 
 
-navbar > segmentedcontrol > uibutton.ui-custom-tint.disabled:hover, 
 navbar > segmentedcontrol > uibutton.ui-custom-tint.disabled.touched, 
-toolbar > segmentedcontrol > uibutton.ui-custom-tint.disabled:hover, 
 toolbar > segmentedcontrol > uibutton.ui-custom-tint.disabled.touched, 
 
-navbar > segmentedcontrol > uibutton.disabled.ui-custom-tint:hover, 
 navbar > segmentedcontrol > uibutton.disabled.ui-custom-tint.touched, 
-toolbar > segmentedcontrol > uibutton.disabled.ui-custom-tint:hover, 
 toolbar > segmentedcontrol > uibutton.disabled.ui-custom-tint.touched {
 	border: solid 1px #484E59;
 	background-image: 
@@ -1460,10 +1426,8 @@ toolbar > segmentedcontrol > uibutton.disabled.ui-custom-tint.touched {
 			to(rgba(0,0,0,.5))) !important;
 	color: #fff;
 }
-segmentedcontrol > uibutton.ui-custom-tint:hover, 
 segmentedcontrol > uibutton.ui-custom-tint.touched,
 segmentedcontrol > uibutton.ui-custom-tint.selected, 
-segmentedcontrol > uibutton.ui-custom-tint.selected:hover, 
 segmentedcontrol > uibutton.ui-custom-tint.selected.touched {
 	border: solid 1px #484E59;
 	background-image: 
@@ -1475,7 +1439,6 @@ segmentedcontrol > uibutton.ui-custom-tint.selected.touched {
 	color: #fff;
 }
 uibutton[ui-kind=action].ui-custom-tint,
-uibutton[ui-kind=action].ui-custom-tint.disabled:hover, 
 uibutton[ui-kind=action].ui-custom-tint.disabled.touched {
 	background-image: 
 		-webkit-gradient(linear, left top, left bottom, 
@@ -1484,9 +1447,8 @@ uibutton[ui-kind=action].ui-custom-tint.disabled.touched {
 			color-stop(0.5, rgba(0,0,0,.5)), 
 			to(rgba(0,0,0,.45)));
 	color: #fff;
-text-shadow: 0 1px 1px #000;
+	text-shadow: 0 1px 1px #000;
 }
-uibutton[ui-kind=action].ui-custom-tint:hover, 
 uibutton[ui-kind=action].ui-custom-tint.touched {
 	background-image: 
 		-webkit-gradient(linear, left top, left bottom, 
@@ -1499,14 +1461,13 @@ uibutton[ui-kind=action].ui-custom-tint.touched {
 }
 /* End Sgwt Custom Tint Styles */
 
-*[ui-contains="action-uibuttons"] {
+*[ui-contains='action-uibuttons'] {
 	-webkit-box-orient: vertical;
 }
-*[ui-contains="action-buttons"] button[ui-kind=action], 
-*[ui-contains="action-buttons"] button[ui-kind=action].disabled:hover {
+*[ui-contains='action-buttons'] button[ui-kind=action] {
 	width: 94%;
 	margin: 20px auto;
-margin: 20px auto;
+	margin: 20px auto;
 	-webkit-box-flex: 1 !important;
 }
 /* End UIButton Styles */
@@ -1622,12 +1583,9 @@ tableview > tablecell {
     -webkit-box-sizing: border-box;
     min-height: 44px;
 }
-tableview > tablecell[href]:hover, 
 tableview > tablecell[href].touched,
-tableview[ui-implements="detail-menu"] > tablecell:hover,
-tableview[ui-implements="detail-menu"] > tablecell.touched,
-tableview[ui-implements="selection-list"] > tablecell:hover,
-tableview[ui-implements="selection-list"] > tablecell.touched {
+tableview[ui-implements='detail-menu'] > tablecell.selected.touched,
+tableview[ui-implements='selection-list'] > tablecell.selected.touched {
     background-image: 
         -webkit-gradient(linear, left top, left bottom, 
             from(#4286f5), 
@@ -1635,22 +1593,19 @@ tableview[ui-implements="selection-list"] > tablecell.touched {
     color: #fff;
 	cursor: pointer;
 }
-
-tableview > tablecell[href]:hover > *,
-tableview[ui-implements="detail-menu"] > tablecell:hover > * {
+tableview > tablecell[href].touched > *,
+tableview[ui-implements='detail-menu'] > tablecell.touched > * {
 	color: #fff !important;
 }
-tableview > tablecell[href]:hover > span, 
 tableview > tablecell[href].touched > span,
-tableview[ui-implements="detail-menu"] > tablecell:hover > span,
-tableview[ui-implements="detail-menu"] > tablecell.touched > span {
+tableview[ui-implements='detail-menu'] > tablecell.touched > span {
     color: #fff;
 }
 tablecell[ui-implements=action] > celltitle:after {
-	content: "..."
+	content: '...'
 }
 tablecell[ui-implements=disclosure]:after {
-    content: "›";
+    content: '›';
     font: normal 28px/28px Verdana;
     color: #808080;
     display: block;
@@ -1660,7 +1615,7 @@ tablecell[ui-implements=disclosure]:after {
     margin-bottom: -20px;
     margin-left: -10px;
 }
-tablecell[ui-implements=disclosure][href]:hover:after {
+tablecell[ui-implements=disclosure][href].touched:after {
     color: #fff;
 }
 tablecell[ui-usage=icon][ui-implements=disclosure]:after, tablecell[ui-implements=disclosure][ui-usage=icon]:after {
@@ -1671,7 +1626,7 @@ tablecell[ui-usage=image][ui-implements=disclosure]:after, tablecell[ui-implemen
     margin-bottom: -20px;
 }
 tablecell[ui-implements=detail-disclosure]:after {
-    content: "›";
+    content: '›';
     font: normal 26px/14px Verdana;
     background-color: #6292e6;
     background-image: 
@@ -1721,7 +1676,7 @@ tablecell[ui-implements=detail-disclosure].green:after {
     background-color: #78c01b;
 }
 tablecell[ui-implements=add]:after {
-    content: "+";
+    content: '+';
     font: normal 19px/14px Verdana;
     font-weight: bold;
     background-color: #6292e6;
@@ -1994,13 +1949,11 @@ tablecell > celldetail {
     color: #4c5f70;
     line-height: 16px;
 }
-
 tableview[ui-tablecell-order=stacked] > tablecell[ui-usage=icon] > span:first-of-type {
     float: left;
     width: auto;
     margin-top: 6px;
 }
-
 tableview[ui-tablecell-order=stacked] > tablecell[ui-usage=icon] > .subtitle {
 	width: 75% !important;
 }
@@ -2132,35 +2085,41 @@ tableview[ui-tablecell-order=centered].ui-show-delete-disclosures celltitle {
 	-webkit-transform: none;
 	width: 35%;
 }
-tableview.ui-show-delete-disclosures > tablecell:hover, tableview.ui-show-move-indicator > tablecell:hover {
+tableview.ui-show-delete-disclosures > tablecell.touched,
+tableview.ui-show-move-indicator > tablecell.touched {
 	background: #fff !important;
 }
-tableview.ui-show-delete-disclosures > tablecell:hover celltitle, tableview.ui-show-move-indicator  > tablecell:hover celltitle {
+tableview.ui-show-delete-disclosures > tablecell.touched celltitle,
+tableview.ui-show-move-indicator  > tablecell.touched celltitle {
 	color: #000 !important;
 }
 tableview.ui-show-delete-disclosures tablecell:after, tableview.ui-show-delete-disclosures > tablecell >  cellcounter  {
 	display: none !important;
 }
-tableview.ui-show-delete-disclosures > tablecell:hover > cellsubtitle, tableview.ui-show-move-indicator > tablecell[ui-draggable]:hover > cellsubtitle {
+tableview.ui-show-delete-disclosures > tablecell.touched > cellsubtitle,
+tableview.ui-show-move-indicator > tablecell[ui-draggable].touched > cellsubtitle {
     color: #586b96 !important;
 }
-tableview[ui-tablecell-order=centered].ui-show-delete-disclosures > tablecell:hover > celltitle, tableview[ui-tablecell-order=centered].ui-show-move-indicator > tablecell[ui-draggable]:hover > celltitle {
+tableview[ui-tablecell-order=centered].ui-show-delete-disclosures > tablecell.touched > celltitle, tableview[ui-tablecell-order=centered].ui-show-move-indicator > tablecell[ui-draggable].touched > celltitle {
     color: #586B96 !important;
 }
-tableview.ui-show-delete-disclosures > tablecell:hover > cellsubtitle, tableview.ui-show-move-indicator > tablecell:hover > cellsubtitle, tableview[ui-tablecell-order=centered].ui-show-move-indicator > tablecell[ui-draggable]:hover > cellsubtitle {
+tableview.ui-show-delete-disclosures > tablecell.touched > cellsubtitle,
+tableview.ui-show-move-indicator > tablecell.touched > cellsubtitle,
+tableview[ui-tablecell-order=centered].ui-show-move-indicator > tablecell[ui-draggable].touched > cellsubtitle {
     color: #000 !important;
 }
-tableview[ui-tablecell-order=stacked].ui-show-delete-disclosures > tablecell:hover > cellsubtitle, 
-tableview[ui-tablecell-order=stacked].ui-show-move-indicator > tablecell:hover > cellsubtitle {
+tableview[ui-tablecell-order=stacked].ui-show-delete-disclosures > tablecell.touched > cellsubtitle, 
+tableview[ui-tablecell-order=stacked].ui-show-move-indicator > tablecell.touched > cellsubtitle {
 	color: #666 !important;
 }
-tableview[ui-tablecell-order=stacked].ui-show-delete-disclosures > tablecell:hover > celldetail, 
-tableview[ui-tablecell-order=stacked].ui-show-move-indicator > tablecell:hover > celldetail {
+tableview[ui-tablecell-order=stacked].ui-show-delete-disclosures > tablecell.touched > celldetail, 
+tableview[ui-tablecell-order=stacked].ui-show-move-indicator > tablecell.touched > celldetail {
     color: #4c5f70 !important;
 }
-tableview[ui-tablecell-order=stacked].ui-show-delete-disclosures > tablecell:hover > celldatetime, 
-tableview[ui-tablecell-order=stacked].ui-show-move-indicator > tablecell:hover > .celldatetime, tableview[ui-tablecell-order=stacked].ui-show-delete-disclosures > tablecell:hover > cellvalue, 
-tableview[ui-tablecell-order=stacked].ui-show-move-indicator > tablecell:hover > .cellvalue  {
+tableview[ui-tablecell-order=stacked].ui-show-delete-disclosures > tablecell.touched > celldatetime,
+tableview[ui-tablecell-order=stacked].ui-show-move-indicator > tablecell.touched > .celldatetime, 
+tableview[ui-tablecell-order=stacked].ui-show-delete-disclosures > tablecell.touched > cellvalue,
+tableview[ui-tablecell-order=stacked].ui-show-move-indicator > tablecell.touched > .cellvalue  {
 	color: #2671d8 !important;
 }
 tableview[ui-tablecell-order=stacked].ui-show-delete-disclosures > tablecell > cellsubtitle, 
@@ -2214,7 +2173,7 @@ tableview[ui-tablecell-order=stacked].ui-show-delete-disclosures  > tablecell > 
 .ui-move-indicator {
 	height: 16px;
 	width: 19px;
-	background: transparent url("../icons/move-indicator.svg") no-repeat;
+	background: transparent url('../icons/move-indicator.svg') no-repeat;
 	-webkit-transition: -webkit-transform .25s ease-in-out;
 	-webkit-transform: translate3d(30px,0,0);
 	position: absolute;
@@ -2308,13 +2267,10 @@ stack[ui-kind=alphabetical-list] span {
 	font-weight: bold;
 	color: #000;
 }
-stack[ui-kind=alphabetical-list] span:hover {
-	cursor: pointer;
-}
-stack[ui-kind=alphabetical-list]:hover {
+stack[ui-kind=alphabetical-list].touched {
 	background-color: rgba(0,0,0,0.25);
 }
-stack[ui-kind=alphabetical-list]:hover span {
+stack[ui-kind=alphabetical-list].touched span {
 	color: #fff;
 }
 /* End Tableview Styles */
@@ -2451,7 +2407,7 @@ popup toolbar[ui-placement=bottom] > uibutton[ui-kind=action][ui-implements=cont
 			-webkit-font-smoothing: antialiased;
     		padding: 9px;
 }
-popup toolbar[ui-placement=bottom] > uibutton[ui-kind=action]:hover, popup toolbar[ui-placement=bottom] > uibutton[ui-kind=action].hover {
+popup toolbar[ui-placement=bottom] > uibutton[ui-kind=action].touched {
 	background-image: 
 		-webkit-gradient(linear, left top, left bottom, 
 			from(#70747f), 
@@ -2475,7 +2431,7 @@ tableview[ui-implements=selection-list] tablecell.selected > checkmark {
 	opacity: 1;
 	color: #496691;
 }
-tableview[ui-implements=selection-list] tablecell > checkmark, tableview[ui-implements=selection-list] tablecell.selected:hover > checkmark {
+tableview[ui-implements=selection-list] tablecell > checkmark, tableview[ui-implements=selection-list] tablecell.selected.touched > checkmark {
 	color: #fff;
 }
 tableview[ui-implements=selection-list] > tablecell input[type=radio] {
@@ -2527,10 +2483,10 @@ switchcontrol > thumb {
     -webkit-transform: translateX(0px);
     -webkit-transform: translate3d(0,0,0);
 }
-switchcontrol:hover > thumb {
+switchcontrol.touched > thumb {
 	background-image: none;
 }
-switchcontrol[ui-kind=generic]:hover > thumb {
+switchcontrol[ui-kind=generic].touched > thumb {
 	-webkit-box-shadow: inset 0 2px 1px #fff, inset 0 -2px 1px #fff;
 	background-image: none;
 }
@@ -2543,7 +2499,7 @@ switchcontrol[ui-kind=traditional] > thumb {
     height: auto;
 }
 switchcontrol:before {
-	content: "";
+	content: '';
 	display:  block;
 	height: 26px;
 	-webkit-border-radius: 20px;
@@ -2562,7 +2518,7 @@ switchcontrol[ui-kind=traditional]:before {
 	content: none;
 }
 switchcontrol > thumb:before {
-	content:  "";
+	content:  '';
     display: block;
 	height: 14px;
 	width: 2px;
@@ -2600,7 +2556,7 @@ switchcontrol[ui-kind=traditional].on > thumb:before {
 	left: 0;
 }
 switchcontrol > thumb:after {
-	content:  "";
+	content:  '';
 	display:  block;
 	height: 10px;
 	width: 10px;
@@ -2822,7 +2778,7 @@ slider > thumb {
     overflow: hidden;
 }
 slider > thumb:after {
-	content: "";
+	content: '';
 	display: block;
     width 19px;
     height: 19px;
@@ -2909,16 +2865,15 @@ tabbar > uibutton {
     margin: 3px 3px 3px 3px;
     padding: 4px 0 0 0;
 }
-tabbar > uibutton[ui-implements=tab]:hover,
 tabbar > uibutton.selected,
 tabbar > uibutton.touched {
     background: rgba(255, 255, 255, 0.15) !important;
 }
-tabbar > uibutton[ui-implements=tab].disabled:hover {
+tabbar > uibutton[ui-implements=tab].disabled.touched {
     background: none !important;
 }
 tabbar > uibutton > icon,
-tabbar > uibutton[ui-implements=tab].disabled:hover > icon {
+tabbar > uibutton[ui-implements=tab].disabled.touched > icon {
     display: block;
     margin: 0;
     height: 30px;
@@ -2933,11 +2888,6 @@ tabbar > uibutton[ui-implements=tab].disabled:hover > icon {
     -webkit-mask-size: 30px 30px;
     background-size: 30px 30px;
 }
-tabbar > uibutton[ui-implements=tab].disabled:hover > icon,
-tabbar > uibutton[ui-implements=tab].disabled:hover {
-    cursor: default;
-}
-
 tabbar > uibutton > icon + label {
     display: inline-block;
     font-size: 10px !important;
@@ -2950,7 +2900,6 @@ tabbar > uibutton > icon + label {
     -webkit-font-smoothing: subpixel-antialiased !important;
 }
 tabbar > uibutton.selected > icon,
-tabbar > uibutton:hover > icon,
 tabbar > uibutton.touched > icon {
     background: 
     	-webkit-gradient(linear, 38% 0%, 60% 70%, 
@@ -3002,7 +2951,7 @@ expander > header > label {
 	cursor: pointer;
 }
 expander > header:before {
-	content: "";
+	content: '';
 	display: block;
 	width: 30px;
 	height: 30px;
@@ -3026,7 +2975,7 @@ expander > header:before {
 	
 } 
 expander > header:after {
-	content: "";
+	content: '';
 	display: block;
 	width: 30px;
 	height: 30px;
@@ -3133,7 +3082,7 @@ progressbar {
 	
 }
 /* Paging Control Styles */
-stack[ui-implements="paging"] {
+stack[ui-implements='paging'] {
 	margin: 0 auto;
 	display: -webkit-box;
 	-webkit-box-orient: horizontal;
@@ -3145,18 +3094,18 @@ stack[ui-implements="paging"] {
 	z-index: 1;
 	overflow: hidden;
 }
-stack[ui-implements="paging"] > panel {
+stack[ui-implements='paging'] > panel {
 	display: block !important;
 	-webkit-box-flex: 0;
 }
-stack[ui-implements="paging"] > panel > stack {
+stack[ui-implements='paging'] > panel > stack {
 	width: 100%;
 	height: 100%;
 	padding: 0;
 	margin: 0;
 	text-align: left;
 }
-stack[ui-implements="paging"] > panel > stack > panel {
+stack[ui-implements='paging'] > panel > stack > panel {
 	-webkit-box-sizing: border-box;
 	display: block !important; 
 	width: 320px; 
@@ -3166,7 +3115,7 @@ stack[ui-implements="paging"] > panel > stack > panel {
 	line-height: 140%;
 	padding: 10px;
 }
-stack[ui-implements="indicators"] {
+stack[ui-implements='indicators'] {
 	display: -webkit-box; 
 	width: 320px;
 	padding: 10px 10px 10px 10px;
@@ -3176,7 +3125,7 @@ stack[ui-implements="indicators"] {
 	-webkit-box-pack: center;
 	margin: 0 auto 10px auto;
 }
-stack[ui-implements="indicators"] > indicator {
+stack[ui-implements='indicators'] > indicator {
 	display: block;
 	width: 8px; 
 	height: 8px;
@@ -3185,21 +3134,21 @@ stack[ui-implements="indicators"] > indicator {
 	overflow: hidden;
 	margin-right: 10px;
 }
-stack[ui-implements="indicators"] > indicator.active {
+stack[ui-implements='indicators'] > indicator.active {
 	background-color: #888;
 }
-stack[ui-implements="indicators"] > indicator:first-child {
+stack[ui-implements='indicators'] > indicator:first-child {
 	margin-left: 0;
 }
-stack[ui-implements="indicators"] > indicator:last-child {
+stack[ui-implements='indicators'] > indicator:last-child {
 	margin: 0;
 }
-stack[ui-implements="paging"] > panel panel > h4 {
+stack[ui-implements='paging'] > panel panel > h4 {
 	text-align: center;
 	margin: 0 auto;
 	width: 100%;
 }
-stack[ui-implements="paging"] > panel panel > p {
+stack[ui-implements='paging'] > panel panel > p {
 	text-align: left;
 	margin: 0;
 }
@@ -3233,10 +3182,10 @@ spinner > uibutton {
 	-webkit-box-sizing: border-box;
 	width: 33px;
 }
-tablecell:hover spinner > uibutton > label {
+tablecell.touched spinner > uibutton > label {
 	color: #000 !important;
 }
-spinner > uibutton:hover {
+spinner > uibutton.touched {
 	background-image: 
 		-webkit-gradient(linear, left top, left bottom, 
 			from(#7d88a5), 
@@ -3480,22 +3429,24 @@ view[ui-transition-type=accordion] {
 	0% { -webkit-transform: rotateY(0deg); }
 	100% { -webkit-transform: rotateY(-180deg); }
 }
+
 @-webkit-keyframes anim-flip-top-front-in {
-	0% { -webkit-transform: rotateX(-180deg); }
+	0% { -webkit-transform: rotateX(180deg); }
 	100% { -webkit-transform: rotateX(0deg); }
 }
 @-webkit-keyframes anim-flip-top-front-out {
 	0% { -webkit-transform: rotateX(0deg); }
-	100% { -webkit-transform: rotateX(-180deg); }
+	100% { -webkit-transform: rotateX(180deg); }
 }
 @-webkit-keyframes anim-flip-top-back-in {
 	0% { -webkit-transform: rotateX(0deg); }
-	100% { -webkit-transform: rotateX(180deg); }
+	100% { -webkit-transform: rotateX(-180deg); }
 }
 @-webkit-keyframes anim-flip-top-back-out {
-	0% { -webkit-transform: rotateX(180deg); }
+	0% { -webkit-transform: rotateX(-180deg); }
 	100% { -webkit-transform: rotateX(0deg); }
 }
+
 @-webkit-keyframes anim-flip-bottom-front-in {
 	0% { -webkit-transform: rotateX(-180deg); }
 	100% { -webkit-transform: rotateX(0deg); }
@@ -3510,15 +3461,6 @@ view[ui-transition-type=accordion] {
 }
 @-webkit-keyframes anim-flip-bottom-back-out {
 	0% { -webkit-transform: rotateX(180deg); }
-	100% { -webkit-transform: rotateX(0deg); }
-}
-
-@-webkit-keyframes anim-flip-bottom-back-in {
-	0% { -webkit-transform: rotateX(0deg); }
-	100% { -webkit-transform: rotateX(-180deg); }
-}
-@-webkit-keyframes anim-flip-bottom-back-out {
-	0% { -webkit-transform: rotateX(-180deg); }
 	100% { -webkit-transform: rotateX(0deg); }
 }
 
@@ -3611,7 +3553,7 @@ subview[ui-paging-orient=vertical][ui-navigation-status=traversed] {
 	-webkit-transform: translate3d(0,-100%,0);
 	opacity: 0;
 }
-app[ui-kind="navigation-with-one-navbar"] > navbar > uibutton[ui-implements="back"] {
+app[ui-kind='navigation-with-one-navbar'] > navbar > uibutton[ui-implements='back'] {
 	display: none;
 }
 
@@ -3631,31 +3573,31 @@ subview[ui-transition=cube][ui-transition-state=final] > * {
   -webkit-transition-duration: 1000ms;
 }
 
-view[ui-transition=cube][ui-transition-state="slowmode final" > *,
-subview[ui-transition=cube][ui-transition-state="slowmode final" > * {
+view[ui-transition=cube][ui-transition-state='slowmode final' > *,
+subview[ui-transition=cube][ui-transition-state='slowmode final' > * {
   -webkit-transition-duration: 5000ms;
 }
 
 /* initial state */
-view[ui-transition=cube][ui-transition-state="initial outgoing"],
-subview[ui-transition=cube][ui-transition-state="initial outgoing"] {
+view[ui-transition=cube][ui-transition-state='initial outgoing'],
+subview[ui-transition=cube][ui-transition-state='initial outgoing'] {
   /* The z translate is half the width */
   -webkit-transform: translateZ(-512px) rotateY(0deg) translateZ(512px);
 }
 
-view[ui-transition=cube][ui-transition-state="initial incoming"],
-subview[ui-transition=cube][ui-transition-state="initial incoming"] {
+view[ui-transition=cube][ui-transition-state='initial incoming'],
+subview[ui-transition=cube][ui-transition-state='initial incoming'] {
   -webkit-transform: translateZ(-512px) rotateY(90deg) translateZ(512px);
 }
 
 /* final state */
-view[ui-transition=cube][ui-transition-state="final outgoing"] ,
-subview[ui-transition=cube][ui-transition-state="final outgoing"] {
+view[ui-transition=cube][ui-transition-state='final outgoing'] ,
+subview[ui-transition=cube][ui-transition-state='final outgoing'] {
   -webkit-transform: translateZ(-512px) rotateY(-90deg) translateZ(512px);
 }
 
-view[ui-transition=cube][ui-transition-state="final incoming"],
-subview[ui-transition=cube][ui-transition-state="final incoming"] {
+view[ui-transition=cube][ui-transition-state='final incoming'],
+subview[ui-transition=cube][ui-transition-state='final incoming'] {
   -webkit-transform: translateZ(-512px) rotateY(0deg) translateZ(512px);
 }
 /* End Cube Transition */
@@ -3733,7 +3675,7 @@ popover header {
     z-index: 2000;
 }
 popover:after {
-    content: "";
+    content: '';
     position: absolute;
     z-index: 10000;
     top: -16px;
