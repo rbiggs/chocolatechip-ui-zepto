@@ -1,6 +1,9 @@
-----
-ChocolateChip-UI - A Compact JavaScript Framework for Mobile Webkit Apps
-----
+#ChocolateChip-UI for Zepto
+
+##Notice: All work on this repository has been terminated!
+
+
+**There is now a new version of [ChocolateChip-UI 2.0](https://github.com/rbiggs/chocolatechip-ui) that works for ChocolateChip.js, jQuery and Zepto. As such, there is no longer any need for separate versions for jQuery and Zepto. The new version contains a magical abstraction layer to make this possible. This means that with only one version, everyone gets the same features, behaviors, widgets and bug fixes at the same time.**
 
 ChocolateChip-UI is a mobile Web app framework using HTML5, WAML, CSS and JavaScript. This version runs on top of Zepto. If you have been using Zepto for you mobile Web app needs, this can round out your needs nicely. You can take advantage of the rich feature set of ChocolateChip-UI running on top of Zepto for a complete development framework.
 
