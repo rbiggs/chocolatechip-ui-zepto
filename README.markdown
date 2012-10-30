@@ -2,6 +2,7 @@
 
 ##Notice: All work on this repository has been terminated!
 
+###October 30, 2012
 
 **There is now a new version of [ChocolateChip-UI 2.0](https://github.com/rbiggs/chocolatechip-ui) that works for ChocolateChip.js, jQuery and Zepto. As such, there is no longer any need for separate versions for jQuery and Zepto. The new version contains a magical abstraction layer to make this possible. This means that with only one version, everyone gets the same features, behaviors, widgets and bug fixes at the same time.**
 
